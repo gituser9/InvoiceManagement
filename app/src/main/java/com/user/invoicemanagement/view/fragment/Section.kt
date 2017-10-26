@@ -1,25 +1,24 @@
 package com.user.invoicemanagement.view.fragment
 
-import android.content.DialogInterface
-import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.other.Constant
+import com.user.invoicemanagement.view.adapter.MainFooterViewHolder
 import com.user.invoicemanagement.view.adapter.MainHeaderViewHolder
 import com.user.invoicemanagement.view.adapter.MainViewHolder
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import io.reactivex.android.schedulers.AndroidSchedulers
-import java.text.NumberFormat
 import java.util.concurrent.TimeUnit
 
 
-class Section(sectionParameters: SectionParameters, private val factory: ProductFactory, var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
+class Section(sectionParameters: SectionParameters, private val factory: ProductFactory, private var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
+
+    private lateinit var footerHolder: MainFooterViewHolder
+
 
     override fun getContentItemsTotal(): Int = list.size
 
@@ -49,64 +48,36 @@ class Section(sectionParameters: SectionParameters, private val factory: Product
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    mainView.updateProduct(getProductViewData(itemHolder, product.id))
                 }
         RxTextView.afterTextChangeEvents(itemHolder.edtWeightOnStore)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtWeightInFridge)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtWeightInStorage)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtWeight4)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtWeight5)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtPurchasePrice)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtSellingPrice)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProduct(itemHolder, product.id))
-                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
-                }
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
 
     }
 
@@ -127,7 +98,57 @@ class Section(sectionParameters: SectionParameters, private val factory: Product
         }
     }
 
-    private fun getProduct(holder: MainViewHolder, id: Long): Product {
+    override fun getFooterViewHolder(view: View): RecyclerView.ViewHolder = MainFooterViewHolder(view)
+
+    override fun onBindFooterViewHolder(holder: RecyclerView.ViewHolder?) {
+        val itemHolder = holder as MainFooterViewHolder
+        var purchaseSummary = 0f
+        var sellingSummary = 0f
+        footerHolder = itemHolder
+
+        list.forEach { product: Product ->
+            purchaseSummary += product.purchasePriceSummary
+            sellingSummary += product.sellingPriceSummary
+        }
+
+        itemHolder.mainFooterPurchaseSummary.text = purchaseSummary.toString()
+        itemHolder.mainFooterSellingSummary.text = sellingSummary.toString()
+    }
+
+    private fun updateSummaryData(itemHolder: MainViewHolder, product: Product) {
+        updateProductView(itemHolder, product)
+        mainView.updateProduct(product)
+        itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+        itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+        setFooterData()
+    }
+
+    private fun setFooterData() {
+        var purchaseSummary = 0f
+        var sellingSummary = 0f
+
+        list.forEach { product: Product ->
+            purchaseSummary += product.purchasePriceSummary
+            sellingSummary += product.sellingPriceSummary
+        }
+
+        footerHolder.mainFooterPurchaseSummary.text = purchaseSummary.toString()
+        footerHolder.mainFooterSellingSummary.text = sellingSummary.toString()
+    }
+
+    private fun updateProductView(itemHolder: MainViewHolder, product: Product) {
+        val newProduct = getProductViewData(itemHolder, product.id)
+        product.name = newProduct.name
+        product.weightOnStore = newProduct.weightOnStore
+        product.weightInFridge = newProduct.weightInFridge
+        product.weightInStorage = newProduct.weightInStorage
+        product.weight4 = newProduct.weight4
+        product.weight5 = newProduct.weight5
+        product.purchasePrice = newProduct.purchasePrice
+        product.sellingPrice = newProduct.sellingPrice
+    }
+
+    private fun getProductViewData(holder: MainViewHolder, id: Long): Product {
         val product = Product()
         product.id = id
         product.name = holder.edtName.text.toString()

@@ -34,7 +34,6 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
-
         adapter = SectionedRecyclerViewAdapter()
 
         if (savedInstanceState == null) {
@@ -76,6 +75,7 @@ class MainFragment : BaseFragment(), MainView {
 
         val params = SectionParameters.Builder(R.layout.fragment_main_item)
                 .headerResourceId(R.layout.fragment_main_header)
+                .footerResourceId(R.layout.fragment_main_footer)
                 .build()
 
         for (item in list) {
@@ -83,7 +83,6 @@ class MainFragment : BaseFragment(), MainView {
         }
 
         adapter.notifyDataSetChanged()
-
     }
 
     override fun addNewProduct(factoryId: Long) {
@@ -106,6 +105,7 @@ class MainFragment : BaseFragment(), MainView {
         val dialog = EditFactoryDialogFragment()
 //        dialog.edtFactoryName.setText(factory.name)
         dialog.positiveListener = DialogInterface.OnClickListener { _, _ ->
+            hideKeyboard()
             presenter.updateFactory(dialog.edtFactoryName.text.toString(), factory.id)
         }
         dialog.show(activity.supportFragmentManager, "edit factory")
