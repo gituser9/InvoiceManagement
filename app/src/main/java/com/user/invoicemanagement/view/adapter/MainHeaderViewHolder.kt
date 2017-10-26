@@ -12,5 +12,7 @@ class MainHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val tvHeader: TextView = itemView.tvHeader
     val btnAddProduct: ImageButton = itemView.btnAddProduct
+    val btnEditName: ImageButton = itemView.btnEditName
+    val btnDelete: ImageButton = itemView.btnDelete
 
 }

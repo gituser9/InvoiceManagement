@@ -12,7 +12,7 @@
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <ImageButton
@@ -21,9 +21,10 @@
         android:src="@drawable/ic_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginLeft="64dp" />
 
     <ImageButton
+        android:id="@+id/btnEditName"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/ic_edit"
         android:layout_marginLeft="16dp"
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content" />
 
     <ImageButton
+        android:id="@+id/btnDelete"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/ic_delete"
         android:layout_marginLeft="16dp"

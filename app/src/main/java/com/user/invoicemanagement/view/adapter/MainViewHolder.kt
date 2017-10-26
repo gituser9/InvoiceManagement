@@ -53,7 +53,7 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     init {
-        RxTextView.afterTextChangeEvents(edtWeightOnStore)
+        /*RxTextView.afterTextChangeEvents(edtWeightOnStore)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ ->
@@ -101,6 +101,6 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .subscribe { _ ->
                     tvPurchasePriceSummary.text = Constant.priceFormat.format(purchasePriceSummary())
                     tvSellingPriceSummary.text = Constant.priceFormat.format(sellingPriceSummary())
-                }
+                }*/
     }
 }

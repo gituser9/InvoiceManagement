@@ -1,8 +1,9 @@
 package com.user.invoicemanagement.presenter
 
 import com.user.invoicemanagement.model.ModelImpl
+import com.user.invoicemanagement.model.data.Summary
+import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.view.fragment.MainView
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -41,6 +42,28 @@ class MainPresenter(var view: MainView) : BasePresenter() {
         getAll()
     }
 
+    fun updateProduct(product: Product) {
+        model.updateProduct(product)
+    }
 
+    fun deleteFactory(id: Long) {
+        model.deleteFactory(id)
 
+        getAll()
+    }
+
+    fun updateFactory(newName: String, factoryId: Long) {
+        model.updateFactory(newName, factoryId)
+
+        getAll()
+    }
+
+    fun getSummary() {
+        model.getSummary()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { summary ->
+                    view.showSummaryDialog(summary)
+                }
+    }
 }

@@ -120,7 +120,7 @@
 
         <TextView
             android:id="@+id/tvPurchasePriceSummary"
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -133,7 +133,7 @@
 
         <TextView
             android:id="@+id/tvSellingPriceSummary"
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

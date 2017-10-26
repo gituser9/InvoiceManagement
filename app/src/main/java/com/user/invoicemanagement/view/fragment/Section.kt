@@ -1,5 +1,6 @@
 package com.user.invoicemanagement.view.fragment
 
+import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
@@ -18,7 +19,7 @@ import java.text.NumberFormat
 import java.util.concurrent.TimeUnit
 
 
-class Section(sectionParameters: SectionParameters, private val factory: ProductFactory, private var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
+class Section(sectionParameters: SectionParameters, private val factory: ProductFactory, var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
 
     override fun getContentItemsTotal(): Int = list.size
 
@@ -44,6 +45,68 @@ class Section(sectionParameters: SectionParameters, private val factory: Product
         itemHolder.btnDeleteProduct.setOnClickListener {
             mainView.deleteProduct(product.id)
         }
+        RxTextView.afterTextChangeEvents(itemHolder.edtName)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtWeightOnStore)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtWeightInFridge)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtWeightInStorage)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtWeight4)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtWeight5)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtPurchasePrice)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
+        RxTextView.afterTextChangeEvents(itemHolder.edtSellingPrice)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    mainView.updateProduct(getProduct(itemHolder, product.id))
+                    itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
+                    itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+                }
 
     }
 
@@ -53,9 +116,29 @@ class Section(sectionParameters: SectionParameters, private val factory: Product
         val itemHolder = holder as MainHeaderViewHolder
         itemHolder.tvHeader.text = factory.name
 
-
         itemHolder.btnAddProduct.setOnClickListener {
             mainView.addNewProduct(factory.id)
         }
+        itemHolder.btnEditName.setOnClickListener {
+            mainView.showEditFactoryDialog(factory)
+        }
+        itemHolder.btnDelete.setOnClickListener {
+            mainView.deleteFactory(factory.id)
+        }
+    }
+
+    private fun getProduct(holder: MainViewHolder, id: Long): Product {
+        val product = Product()
+        product.id = id
+        product.name = holder.edtName.text.toString()
+        product.weightOnStore = holder.edtWeightOnStore.text.toString().toFloat()
+        product.weightInFridge = holder.edtWeightInFridge.text.toString().toFloat()
+        product.weightInStorage = holder.edtWeightInStorage.text.toString().toFloat()
+        product.weight4 = holder.edtWeight4.text.toString().toFloat()
+        product.weight5 = holder.edtWeight5.text.toString().toFloat()
+        product.purchasePrice = holder.edtPurchasePrice.text.toString().toFloat()
+        product.sellingPrice = holder.edtSellingPrice.text.toString().toFloat()
+
+        return product
     }
 }

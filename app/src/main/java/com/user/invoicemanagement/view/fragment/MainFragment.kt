@@ -1,16 +1,18 @@
 package com.user.invoicemanagement.view.fragment
 
-import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.view.View
 import com.user.invoicemanagement.R
+import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.presenter.MainPresenter
-import com.user.invoicemanagement.view.MainActivityCallback
+import com.user.invoicemanagement.view.fragment.dialog.EditFactoryDialogFragment
+import com.user.invoicemanagement.view.fragment.dialog.SummaryDialogFragment
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 
@@ -19,7 +21,6 @@ class MainFragment : BaseFragment(), MainView {
 
     lateinit var presenter: MainPresenter
     lateinit var adapter: SectionedRecyclerViewAdapter
-    lateinit var activityCallback: MainActivityCallback
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,6 @@ class MainFragment : BaseFragment(), MainView {
         setHasOptionsMenu(true)
 
         presenter = MainPresenter(this)
-//        activityCallback = activity.
     }
 
 
@@ -58,6 +58,10 @@ class MainFragment : BaseFragment(), MainView {
             presenter.addNewFactory()
             true
         }
+        R.id.show_summary -> {
+            presenter.getSummary()
+            true
+        }
         else -> {
             super.onOptionsItemSelected(item)
         }
@@ -79,6 +83,7 @@ class MainFragment : BaseFragment(), MainView {
         }
 
         adapter.notifyDataSetChanged()
+
     }
 
     override fun addNewProduct(factoryId: Long) {
@@ -87,6 +92,34 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun deleteProduct(id: Long) {
         presenter.deleteProduct(id)
+    }
+
+    override fun updateProduct(product: Product) {
+        presenter.updateProduct(product)
+    }
+
+    override fun deleteFactory(id: Long) {
+        presenter.deleteFactory(id)
+    }
+
+    override fun showEditFactoryDialog(factory: ProductFactory) {
+        val dialog = EditFactoryDialogFragment()
+//        dialog.edtFactoryName.setText(factory.name)
+        dialog.positiveListener = DialogInterface.OnClickListener { _, _ ->
+            presenter.updateFactory(dialog.edtFactoryName.text.toString(), factory.id)
+        }
+        dialog.show(activity.supportFragmentManager, "edit factory")
+    }
+
+    override fun showSummaryDialog(summary: Summary) {
+        val bundle = Bundle()
+        bundle.putFloat("purchaseSummary", summary.purchaseSummary)
+        bundle.putFloat("sellingSummary", summary.sellingSummary)
+
+        val dialog = SummaryDialogFragment()
+        dialog.summary = summary
+//        dialog.arguments = bundle
+        dialog.show(activity.supportFragmentManager, "summary")
     }
 
 }
