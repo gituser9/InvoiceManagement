@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 
 
 abstract class BaseFragment : Fragment(), View {
@@ -13,4 +14,7 @@ abstract class BaseFragment : Fragment(), View {
         imm.hideSoftInputFromWindow(activity.currentFocus.windowToken, 0)
     }
 
+    fun showToast(message: String) {
+        Toast.makeText(activity.baseContext, message, Toast.LENGTH_SHORT).show()
+    }
 }

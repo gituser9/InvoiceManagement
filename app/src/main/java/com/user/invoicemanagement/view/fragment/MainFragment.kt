@@ -36,13 +36,11 @@ class MainFragment : BaseFragment(), MainView {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         adapter = SectionedRecyclerViewAdapter()
 
-        if (savedInstanceState == null) {
-            presenter.getAll()
-        }
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
+
+        presenter.getAll()
 
         return view
     }
@@ -59,6 +57,10 @@ class MainFragment : BaseFragment(), MainView {
         }
         R.id.show_summary -> {
             presenter.getSummary()
+            true
+        }
+        R.id.close_invoice -> {
+            presenter.closeInvoice()
             true
         }
         else -> {
@@ -103,10 +105,10 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun showEditFactoryDialog(factory: ProductFactory) {
         val dialog = EditFactoryDialogFragment()
-//        dialog.edtFactoryName.setText(factory.name)
+        dialog.oldName = factory.name
         dialog.positiveListener = DialogInterface.OnClickListener { _, _ ->
-            hideKeyboard()
             presenter.updateFactory(dialog.edtFactoryName.text.toString(), factory.id)
+            hideKeyboard()
         }
         dialog.show(activity.supportFragmentManager, "edit factory")
     }
@@ -118,8 +120,10 @@ class MainFragment : BaseFragment(), MainView {
 
         val dialog = SummaryDialogFragment()
         dialog.summary = summary
-//        dialog.arguments = bundle
+        dialog.arguments = bundle
         dialog.show(activity.supportFragmentManager, "summary")
     }
+
+
 
 }

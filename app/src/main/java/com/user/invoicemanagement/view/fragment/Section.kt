@@ -6,18 +6,21 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.other.Constant
-import com.user.invoicemanagement.view.adapter.MainFooterViewHolder
-import com.user.invoicemanagement.view.adapter.MainHeaderViewHolder
-import com.user.invoicemanagement.view.adapter.MainViewHolder
+import com.user.invoicemanagement.view.adapter.holder.MainFooterViewHolder
+import com.user.invoicemanagement.view.adapter.holder.MainHeaderViewHolder
+import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.text.NumberFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class Section(sectionParameters: SectionParameters, private val factory: ProductFactory, private var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
 
-    private lateinit var footerHolder: MainFooterViewHolder
+    private var footerHolder: MainFooterViewHolder? = null
+    private val baseFormat = NumberFormat.getCurrencyInstance(Locale("ru"))
 
 
     override fun getContentItemsTotal(): Int = list.size
@@ -118,12 +121,15 @@ class Section(sectionParameters: SectionParameters, private val factory: Product
     private fun updateSummaryData(itemHolder: MainViewHolder, product: Product) {
         updateProductView(itemHolder, product)
         mainView.updateProduct(product)
-        itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(itemHolder.purchasePriceSummary())
-        itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(itemHolder.sellingPriceSummary())
+        itemHolder.tvPurchasePriceSummary.text = baseFormat.format(itemHolder.purchasePriceSummary())
+        itemHolder.tvSellingPriceSummary.text = baseFormat.format(itemHolder.sellingPriceSummary())
         setFooterData()
     }
 
     private fun setFooterData() {
+        if (footerHolder == null) {
+            return
+        }
         var purchaseSummary = 0f
         var sellingSummary = 0f
 
@@ -132,8 +138,8 @@ class Section(sectionParameters: SectionParameters, private val factory: Product
             sellingSummary += product.sellingPriceSummary
         }
 
-        footerHolder.mainFooterPurchaseSummary.text = purchaseSummary.toString()
-        footerHolder.mainFooterSellingSummary.text = sellingSummary.toString()
+        footerHolder?.mainFooterPurchaseSummary?.text = purchaseSummary.toString()
+        footerHolder?.mainFooterSellingSummary?.text = sellingSummary.toString()
     }
 
     private fun updateProductView(itemHolder: MainViewHolder, product: Product) {

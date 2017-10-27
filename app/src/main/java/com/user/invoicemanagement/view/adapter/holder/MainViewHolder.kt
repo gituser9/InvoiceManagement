@@ -1,15 +1,11 @@
-package com.user.invoicemanagement.view.adapter;
+package com.user.invoicemanagement.view.adapter.holder;
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import com.jakewharton.rxbinding2.widget.RxTextView
-import com.user.invoicemanagement.other.Constant
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_main_item.view.*
-import java.util.concurrent.TimeUnit
 
 
 class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

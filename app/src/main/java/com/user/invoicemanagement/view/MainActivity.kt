@@ -9,10 +9,11 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import com.user.invoicemanagement.R
+import com.user.invoicemanagement.view.fragment.ArchiveFragment
 import com.user.invoicemanagement.view.fragment.MainFragment
 
 
-class MainActivity : AppCompatActivity(), MainActivityCallback {
+class MainActivity : AppCompatActivity() {
 
     val TAG = "TAG"
 
@@ -42,10 +43,6 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         return super.onOptionsItemSelected(item)
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }*/
 
 
     private fun initNavigationView() {
@@ -61,10 +58,12 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         navigationView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
 
-            /*when (item.itemId) {
-                R.id.actionNotification -> showNotificationTab()
+            when (it.itemId) {
+                R.id.action_archive -> {
+                    replaceFragment(ArchiveFragment(), true)
+                }
                 else -> {}
-            }*/
+            }
             true
         }
     }
@@ -84,11 +83,5 @@ class MainActivity : AppCompatActivity(), MainActivityCallback {
         }
 
         transaction.commit()
-    }
-
-
-    // Callbacks
-    override fun addNewManufacturer() {
-
     }
 }

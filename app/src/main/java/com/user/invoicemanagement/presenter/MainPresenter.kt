@@ -5,6 +5,7 @@ import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.view.fragment.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 
@@ -65,5 +66,10 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                 .subscribe { summary ->
                     view.showSummaryDialog(summary)
                 }
+    }
+
+    fun closeInvoice() {
+        model.closeInvoice()
+        getAll()
     }
 }

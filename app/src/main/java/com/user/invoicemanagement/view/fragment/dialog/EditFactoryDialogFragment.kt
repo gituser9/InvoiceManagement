@@ -14,6 +14,7 @@ import com.user.invoicemanagement.R
 
 class EditFactoryDialogFragment : DialogFragment() {
 
+    var oldName: String? = null
     lateinit var positiveListener: DialogInterface.OnClickListener
     lateinit var edtFactoryName: EditText
 
@@ -23,6 +24,7 @@ class EditFactoryDialogFragment : DialogFragment() {
         val inflater = activity.layoutInflater
         val view = inflater.inflate(R.layout.dialog_edit_factory, null)
         edtFactoryName = view.findViewById<EditText>(R.id.edtFactoryName)
+        edtFactoryName.setText(oldName ?: "")
 
         builder.setView(view)
                 .setCancelable(true)

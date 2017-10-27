@@ -4,13 +4,10 @@ import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.kotlinextensions.insert
 import com.raizlabs.android.dbflow.kotlinextensions.list
 import com.raizlabs.android.dbflow.kotlinextensions.*
-import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.user.invoicemanagement.model.data.Summary
-import com.user.invoicemanagement.model.dto.Product
-import com.user.invoicemanagement.model.dto.ProductFactory
-import com.user.invoicemanagement.model.dto.ProductFactory_Table
-import com.user.invoicemanagement.model.dto.Product_Table
+import com.user.invoicemanagement.model.dto.*
 import io.reactivex.Observable
+import java.security.Timestamp
 
 
 class ModelImpl : Model {
@@ -86,5 +83,78 @@ class ModelImpl : Model {
         }
 
         return Observable.just(Summary(purchaseSummary, sellingSummary))
+    }
+
+    override fun closeInvoice() {
+        try {
+            val factories = (select from ProductFactory::class).list
+            val closedInvoice = ClosedInvoice()
+            val oldFactories = mutableListOf<OldProductFactory>()
+
+            factories.forEach { factory: ProductFactory? ->
+                if (factory != null) {
+                    val oldFactory = createOldFactory(factory)
+                    oldFactory.products = createOldProducts(factory.products ?: emptyList())
+                    oldFactories.add(oldFactory)
+
+                    cleanProducts(factory.products ?: emptyList())
+                }
+            }
+
+            closedInvoice.savedDate = System.currentTimeMillis()
+            closedInvoice.insert()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun getAllClosedInvoices(): Observable<List<ClosedInvoice>> {
+        val closedInvoices = (select from ClosedInvoice::class).list
+
+        return Observable.fromArray(closedInvoices)
+    }
+
+
+
+
+    private fun createOldFactory(factory: ProductFactory): OldProductFactory {
+        val oldFactory = OldProductFactory()
+        oldFactory.name = factory.name
+
+        return oldFactory
+    }
+
+    private fun createOldProducts(products: List<Product>): List<OldProduct> {
+        val oldProducts = mutableListOf<OldProduct>()
+        products.forEach { product: Product? ->
+            if (product != null) {
+                val oldProduct = OldProduct()
+                oldProduct.name = product.name
+                oldProduct.weightOnStore = product.weightOnStore
+                oldProduct.weightInFridge = product.weightInFridge
+                oldProduct.weightInStorage = product.weightInStorage
+                oldProduct.weight4 = product.weight4
+                oldProduct.weight5 = product.weight5
+                oldProduct.purchasePrice = product.purchasePrice
+                oldProduct.sellingPrice = product.sellingPrice
+
+                oldProducts.add(oldProduct)
+            }
+        }
+        return oldProducts
+    }
+
+    private fun cleanProducts(products: List<Product>) {
+        products.forEach { product: Product? ->
+            if (product != null) {
+                product.weightOnStore = 0f
+                product.weightInFridge = 0f
+                product.weightInStorage = 0f
+                product.weight4 = 0f
+                product.weight5 = 0f
+
+                product.update()
+            }
+        }
     }
 }

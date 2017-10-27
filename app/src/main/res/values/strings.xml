@@ -2,7 +2,7 @@
     <string name="app_name">Invoice Management</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
-    <string name="tab_item_history">History</string>
+    <string name="archive">Archive</string>
     <string name="product_name">Name</string>
     <string name="weight_on_store">Weight On Store</string>
     <string name="weight_on_fridge">Weight On Fridge</string>
@@ -17,4 +17,8 @@
     <string name="edit_icon">Edit icon</string>
     <string name="selling_price">Selling Price</string>
     <string name="summary">Summary</string>
+    <string name="close_invoice">Close Invoice</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

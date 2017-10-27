@@ -1,12 +1,12 @@
 package com.user.invoicemanagement.model.dto
 
+import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
-import com.raizlabs.android.dbflow.annotation.Column
 
 
 @Table(database = DbflowDatabase::class)
-class Product {
+class OldProduct {
 
     @PrimaryKey(autoincrement = true)
     var id: Long = 0
@@ -39,10 +39,13 @@ class Product {
     var sellingPrice: Float = 0f
 
 
+
+
     var purchasePriceSummary: Float = 0f
         get() = (weightOnStore + weightInFridge + weightInStorage + weight4 + weight5) * purchasePrice
 
     var sellingPriceSummary: Float = 0f
         get() = (weightOnStore + weightInFridge + weightInStorage + weight4 + weight5) * sellingPrice
+
 
 }
