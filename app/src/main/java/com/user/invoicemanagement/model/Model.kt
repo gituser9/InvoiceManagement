@@ -29,4 +29,8 @@ interface Model {
     fun closeInvoice()
 
     fun getAllClosedInvoices(): Observable<List<ClosedInvoice>>
+
+    fun deleteInvoice(invoice: ClosedInvoice)
+
+    fun getInvoice(invoiceId: Long): Observable<ClosedInvoice>
 }

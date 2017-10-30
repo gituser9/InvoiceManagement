@@ -11,6 +11,7 @@ import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.presenter.MainPresenter
+import com.user.invoicemanagement.view.adapter.MainSection
 import com.user.invoicemanagement.view.fragment.dialog.EditFactoryDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SummaryDialogFragment
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
@@ -81,7 +82,7 @@ class MainFragment : BaseFragment(), MainView {
                 .build()
 
         for (item in list) {
-            adapter.addSection(Section(params, item, item.products!!, this))
+            adapter.addSection(MainSection(params, item, item.products!!, this))
         }
 
         adapter.notifyDataSetChanged()

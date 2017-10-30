@@ -1,4 +1,4 @@
-package com.user.invoicemanagement.view.fragment
+package com.user.invoicemanagement.view.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -9,6 +9,7 @@ import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.view.adapter.holder.MainFooterViewHolder
 import com.user.invoicemanagement.view.adapter.holder.MainHeaderViewHolder
 import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
+import com.user.invoicemanagement.view.fragment.MainView
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,7 +18,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class Section(sectionParameters: SectionParameters, private val factory: ProductFactory, private var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
+class MainSection(sectionParameters: SectionParameters, private val factory: ProductFactory, private var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
 
     private var footerHolder: MainFooterViewHolder? = null
     private val baseFormat = NumberFormat.getCurrencyInstance(Locale("ru"))

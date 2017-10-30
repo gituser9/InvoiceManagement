@@ -2,29 +2,25 @@ package com.user.invoicemanagement.view.adapter.holder
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_main_item.view.*
+import kotlinx.android.synthetic.main.fragment_closed_invoice_item.view.*
 
 
-class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ClosedSectionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val edtName: EditText = itemView.edtName
+    val edtName: TextView = itemView.edtName
 
-    val edtWeightOnStore: EditText = itemView.edtWeightOnStore
-    val edtWeightInFridge: EditText = itemView.edtWeightOnFridge
-    val edtWeightInStorage: EditText = itemView.edtWeightOnStorage
-    val edtWeight4: EditText = itemView.edtWeight4
-    val edtWeight5: EditText = itemView.edtWeight5
+    val edtWeightOnStore: TextView = itemView.edtWeightOnStore
+    val edtWeightInFridge: TextView = itemView.edtWeightOnFridge
+    val edtWeightInStorage: TextView = itemView.edtWeightOnStorage
+    val edtWeight4: TextView = itemView.edtWeight4
+    val edtWeight5: TextView = itemView.edtWeight5
 
-    val edtPurchasePrice: EditText = itemView.edtPurchasePrice
-    val edtSellingPrice: EditText = itemView.edtSellingPrice
+    val edtPurchasePrice: TextView = itemView.edtPurchasePrice
+    val edtSellingPrice: TextView = itemView.edtSellingPrice
 
     val tvPurchasePriceSummary: TextView = itemView.tvPurchasePriceSummary
     val tvSellingPriceSummary: TextView = itemView.tvSellingPriceSummary
-
-    val btnDeleteProduct: ImageButton = itemView.btnDeleteProduct
 
     fun purchasePriceSummary(): Float {
         val edtWeightOnStoreFloat =  edtWeightOnStore.text.toString().toFloat()
@@ -47,5 +43,4 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         return (edtWeightOnStoreFloat + edtWeightInFridgeFloat + edtWeightInStorageFloat + edtWeight4Float + edtWeight5Float) * edtSellingPriceFloat
     }
-
 }

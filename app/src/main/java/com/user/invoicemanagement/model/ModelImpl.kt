@@ -19,8 +19,6 @@ class ModelImpl : Model {
     }
 
     override fun addNewFactory(name: String) {
-//        val results = (select from ProductFactory::class).list
-//        results.forEach { item -> item.delete() }
         val newFactory = ProductFactory()
         newFactory.name = name
 
@@ -89,20 +87,20 @@ class ModelImpl : Model {
         try {
             val factories = (select from ProductFactory::class).list
             val closedInvoice = ClosedInvoice()
-            val oldFactories = mutableListOf<OldProductFactory>()
-
-            factories.forEach { factory: ProductFactory? ->
-                if (factory != null) {
-                    val oldFactory = createOldFactory(factory)
-                    oldFactory.products = createOldProducts(factory.products ?: emptyList())
-                    oldFactories.add(oldFactory)
-
-                    cleanProducts(factory.products ?: emptyList())
-                }
-            }
-
             closedInvoice.savedDate = System.currentTimeMillis()
             closedInvoice.insert()
+            val oldFactories = mutableListOf<OldProductFactory>()
+
+
+            for (factory in factories) {
+                val oldFactory = createOldFactory(factory)
+                oldFactory.invoiceId = closedInvoice.id
+                oldFactory.insert()
+                oldFactories.add(oldFactory)
+
+                createOldProducts(factory.products ?: emptyList(), oldFactory.id)
+                cleanProducts(factory.products ?: emptyList())
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -112,6 +110,16 @@ class ModelImpl : Model {
         val closedInvoices = (select from ClosedInvoice::class).list
 
         return Observable.fromArray(closedInvoices)
+    }
+
+    override fun deleteInvoice(invoice: ClosedInvoice) {
+        invoice.delete()
+    }
+
+    override fun getInvoice(invoiceId: Long): Observable<ClosedInvoice> {
+        val result = (select from ClosedInvoice::class where (ClosedInvoice_Table.id.eq(invoiceId))).result
+
+        return Observable.just(result)
     }
 
 
@@ -124,22 +132,24 @@ class ModelImpl : Model {
         return oldFactory
     }
 
-    private fun createOldProducts(products: List<Product>): List<OldProduct> {
+    private fun createOldProducts(products: List<Product>, factoryId: Long): List<OldProduct> {
         val oldProducts = mutableListOf<OldProduct>()
-        products.forEach { product: Product? ->
-            if (product != null) {
-                val oldProduct = OldProduct()
-                oldProduct.name = product.name
-                oldProduct.weightOnStore = product.weightOnStore
-                oldProduct.weightInFridge = product.weightInFridge
-                oldProduct.weightInStorage = product.weightInStorage
-                oldProduct.weight4 = product.weight4
-                oldProduct.weight5 = product.weight5
-                oldProduct.purchasePrice = product.purchasePrice
-                oldProduct.sellingPrice = product.sellingPrice
 
-                oldProducts.add(oldProduct)
-            }
+        for (product in products) {
+            val oldProduct = OldProduct()
+            oldProduct.factoryId = factoryId
+            oldProduct.name = product.name
+            oldProduct.weightOnStore = product.weightOnStore
+            oldProduct.weightInFridge = product.weightInFridge
+            oldProduct.weightInStorage = product.weightInStorage
+            oldProduct.weight4 = product.weight4
+            oldProduct.weight5 = product.weight5
+            oldProduct.purchasePrice = product.purchasePrice
+            oldProduct.sellingPrice = product.sellingPrice
+
+            oldProduct.insert()
+
+            oldProducts.add(oldProduct)
         }
         return oldProducts
     }

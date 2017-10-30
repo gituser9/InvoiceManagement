@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.dto.ClosedInvoice
@@ -16,16 +17,27 @@ import java.util.*
 class ArchiveViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     var tvInvoiceDate: TextView = itemView.tvInvoiceDate
+    var btnDelete: Button = itemView.btnArchiveDelete
+    var btnOpen: Button = itemView.btnArchiveOpen
 
 }
 
 class ArchiveAdapter : RecyclerView.Adapter<ArchiveViewHolder>() {
 
     var list = emptyList<ClosedInvoice>()
+    lateinit var deleteClickListener: ArchiveClickListener
+    lateinit var openClickListener: ArchiveClickListener
 
     override fun onBindViewHolder(holder: ArchiveViewHolder, position: Int) {
-        val closedInvoices = list[position]
-        holder.tvInvoiceDate.text = getDate(closedInvoices.savedDate)
+        val closedInvoice = list[position]
+        holder.tvInvoiceDate.text = getDate(closedInvoice.savedDate)
+
+        holder.btnDelete.setOnClickListener {
+            deleteClickListener.onClick(closedInvoice)
+        }
+        holder.btnOpen.setOnClickListener {
+            openClickListener.onClick(closedInvoice)
+        }
     }
 
     override fun getItemCount(): Int = list.size
