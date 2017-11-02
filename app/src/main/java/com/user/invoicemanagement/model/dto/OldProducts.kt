@@ -40,7 +40,6 @@ class OldProduct {
 
 
 
-
     var purchasePriceSummary: Float = 0f
         get() = (weightOnStore + weightInFridge + weightInStorage + weight4 + weight5) * purchasePrice
 

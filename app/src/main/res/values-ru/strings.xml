@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Invoice Management</string>
+    <string name="navigation_drawer_open">Открыть</string>
+    <string name="navigation_drawer_close">Закрыть</string>
+    <string name="archive">Архив</string>
+    <string name="product_name">Имя</string>
+    <string name="weight_on_store">Weight On Store</string>
+    <string name="weight_on_fridge">Weight On Fridge</string>
+    <string name="weight_on_storage">Weight On Storage</string>
+    <string name="purchase_price">Закупочная цена</string>
+    <string name="add_product">Добавить товар</string>
+    <string name="add_manufacturer">Добавить завод</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Закрыть</string>
+    <string name="ok">OK</string>
+    <string name="input_new_name">Новое имя</string>
+    <string name="edit_icon">Edit icon</string>
+    <string name="selling_price">Продажная цена</string>
+    <string name="summary">Итог</string>
+    <string name="close_invoice">Закрыть накладную</string>
+</resources>
