@@ -18,4 +18,5 @@
     <string name="selling_price">Продажная цена</string>
     <string name="summary">Итог</string>
     <string name="close_invoice">Закрыть накладную</string>
+    <string name="search">Поиск</string>
 </resources>

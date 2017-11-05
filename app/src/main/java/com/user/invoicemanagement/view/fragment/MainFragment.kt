@@ -6,11 +6,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.view.View
+import android.widget.AutoCompleteTextView
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.presenter.MainPresenter
+import com.user.invoicemanagement.view.adapter.FilterAutoCompleteAdapter
 import com.user.invoicemanagement.view.adapter.MainSection
 import com.user.invoicemanagement.view.fragment.dialog.EditFactoryDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SummaryDialogFragment
@@ -44,6 +46,18 @@ class MainFragment : BaseFragment(), MainView {
         presenter.getAll()
 
         return view
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val filterView = activity.findViewById<AutoCompleteTextView>(R.id.tvFilter)
+        filterView.setAdapter(FilterAutoCompleteAdapter(context, this))
+        filterView.setOnItemClickListener { parent, view, position, id ->
+            val product = parent.getItemAtPosition(position) as Product
+            filterView.setText(product.name)
+            filter(product.name)
+        }
     }
 
 
@@ -125,6 +139,11 @@ class MainFragment : BaseFragment(), MainView {
         dialog.show(activity.supportFragmentManager, "summary")
     }
 
+    override fun filter(name: String) {
+        presenter.filter(name)
+    }
 
-
+    override fun getAll() {
+        presenter.getAll()
+    }
 }

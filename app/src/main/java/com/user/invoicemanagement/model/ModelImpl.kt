@@ -122,7 +122,37 @@ class ModelImpl : Model {
         return Observable.just(result)
     }
 
+    override fun searchProducts(name: String): List<Product> {
+        val products = (select from Product::class where (Product_Table.name.like("%$name%"))).list
+        return products
+    }
 
+    override fun filterProducts(name: String): Observable<List<ProductFactory>> {
+        val products = (select from Product::class where (Product_Table.name.like("%$name%"))).list
+        val ids: MutableList<Long> = mutableListOf()
+
+        for (product in products) {
+            ids.add(product.factoryId)
+        }
+
+        val results = (select from ProductFactory::class where (ProductFactory_Table.id.`in`(ids))).list
+
+        for (factory in results) {
+            val filteredProducts: MutableList<Product> = mutableListOf()
+
+            for (product in factory.products!!) {
+                if (product.name.contains(name, true)) {
+                    filteredProducts.add(product)
+                }
+            }
+
+            factory.products = filteredProducts
+
+            // factory.products!!.filterTo(filteredProducts) { it.name.contains(name, true) }
+        }
+
+        return Observable.fromArray(results)
+    }
 
 
     private fun createOldFactory(factory: ProductFactory): OldProductFactory {

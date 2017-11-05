@@ -33,4 +33,8 @@ interface Model {
     fun deleteInvoice(invoice: ClosedInvoice)
 
     fun getInvoice(invoiceId: Long): Observable<ClosedInvoice>
+
+    fun searchProducts(name: String): List<Product>
+
+    fun filterProducts(name: String): Observable<List<ProductFactory>>
 }

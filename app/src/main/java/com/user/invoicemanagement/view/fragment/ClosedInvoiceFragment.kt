@@ -65,4 +65,12 @@ class ClosedInvoiceFragment : BaseFragment() {
         tvInvoiceSummary.text = "Total summary: $purchaseSummary - $sellingSummary"
         adapter.notifyDataSetChanged()
     }
+
+    override fun filter(name: String) {
+
+    }
+
+    override fun getAll() {
+
+    }
 }

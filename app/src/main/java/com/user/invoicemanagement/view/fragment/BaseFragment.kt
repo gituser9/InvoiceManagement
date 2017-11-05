@@ -1,13 +1,12 @@
 package com.user.invoicemanagement.view.fragment
 
-import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 
 
-abstract class BaseFragment : Fragment(), View {
+abstract class BaseFragment : Fragment(), BaseView {
 
     fun hideKeyboard() {
         val imm = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

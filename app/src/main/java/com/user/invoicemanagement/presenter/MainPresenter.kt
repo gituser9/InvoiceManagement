@@ -1,11 +1,9 @@
 package com.user.invoicemanagement.presenter
 
 import com.user.invoicemanagement.model.ModelImpl
-import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.view.fragment.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 
@@ -71,5 +69,14 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     fun closeInvoice() {
         model.closeInvoice()
         getAll()
+    }
+
+    fun filter(name: String) {
+        model.filterProducts(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { factoryList ->
+                    view.showAll(factoryList)
+                }
     }
 }
