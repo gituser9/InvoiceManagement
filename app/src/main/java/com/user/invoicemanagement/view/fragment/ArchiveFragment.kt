@@ -1,7 +1,5 @@
 package com.user.invoicemanagement.view.fragment
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,14 +7,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.AutoCompleteTextView
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.dto.ClosedInvoice
-import com.user.invoicemanagement.model.dto.OldProductFactory
 import com.user.invoicemanagement.presenter.ArchivePresenter
 import com.user.invoicemanagement.view.adapter.ArchiveAdapter
 import com.user.invoicemanagement.view.adapter.ArchiveClickListener
-import kotlinx.android.synthetic.main.fragment_archive.*
 
 
 class ArchiveFragment : Fragment() {
@@ -35,6 +31,8 @@ class ArchiveFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_archive, container, false)
+        val filterView = activity.findViewById<AutoCompleteTextView>(R.id.tvFilter)
+        filterView.visibility = View.GONE
 
         adapter = ArchiveAdapter()
         adapter.deleteClickListener = object : ArchiveClickListener {

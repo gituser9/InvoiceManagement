@@ -16,12 +16,12 @@ import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.presenter.MainPresenter
 import com.user.invoicemanagement.view.adapter.FilterAutoCompleteAdapter
 import com.user.invoicemanagement.view.adapter.MainSection
-import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
 import com.user.invoicemanagement.view.fragment.dialog.EditFactoryDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SetWeightDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SummaryDialogFragment
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class MainFragment : BaseFragment(), MainView {
@@ -56,6 +56,7 @@ class MainFragment : BaseFragment(), MainView {
         super.onViewCreated(view, savedInstanceState)
 
         val filterView = activity.findViewById<AutoCompleteTextView>(R.id.tvFilter)
+        filterView.visibility = View.VISIBLE
         filterView.setAdapter(FilterAutoCompleteAdapter(context, this))
         filterView.setOnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position) as Product
@@ -80,6 +81,10 @@ class MainFragment : BaseFragment(), MainView {
         }
         R.id.close_invoice -> {
             presenter.closeInvoice()
+            true
+        }
+        R.id.excel_export -> {
+            presenter.exportToExcel(context)
             true
         }
         else -> {
@@ -174,5 +179,15 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun getAll() {
         presenter.getAll()
+    }
+
+    override fun showWait() {
+        recycler_view.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideWait() {
+        progressBar.visibility = View.GONE
+        recycler_view.visibility = View.VISIBLE
     }
 }

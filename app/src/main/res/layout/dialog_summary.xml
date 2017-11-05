@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
 
@@ -24,14 +24,14 @@
 
         <LinearLayout
             android:layout_margin="16dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="16dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp">
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/purchase_price"
                 android:textSize="24sp" />
@@ -49,14 +49,14 @@
 
         <LinearLayout
             android:layout_margin="16dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp">
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/selling_price"
                 android:textSize="24sp" />

@@ -1,13 +1,9 @@
 package com.user.invoicemanagement.model
 
-import com.raizlabs.android.dbflow.kotlinextensions.from
-import com.raizlabs.android.dbflow.kotlinextensions.insert
-import com.raizlabs.android.dbflow.kotlinextensions.list
 import com.raizlabs.android.dbflow.kotlinextensions.*
 import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.*
 import io.reactivex.Observable
-import java.security.Timestamp
 
 
 class ModelImpl : Model {
@@ -147,8 +143,6 @@ class ModelImpl : Model {
             }
 
             factory.products = filteredProducts
-
-            // factory.products!!.filterTo(filteredProducts) { it.name.contains(name, true) }
         }
 
         return Observable.fromArray(results)

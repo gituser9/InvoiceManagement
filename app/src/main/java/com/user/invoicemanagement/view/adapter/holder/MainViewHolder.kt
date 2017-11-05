@@ -13,11 +13,6 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val edtName: EditText = itemView.edtName
 
-    /*val edtWeightOnStore: EditText = itemView.edtWeightOnStore
-    val edtWeightInFridge: EditText = itemView.edtWeightOnFridge
-    val edtWeightInStorage: EditText = itemView.edtWeightOnStorage
-    val edtWeight4: EditText = itemView.edtWeight4
-    val edtWeight5: EditText = itemView.edtWeight5*/
     val btnWeightOnStore: Button = itemView.btnWeightOnStore
     val btnWeightInFridge: Button = itemView.btnWeightOnFridge
     val btnWeightInStorage: Button = itemView.btnWeightOnStorage

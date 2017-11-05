@@ -1,13 +1,12 @@
 package com.user.invoicemanagement.view.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.AutoCompleteTextView
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.dto.ClosedInvoice
 import com.user.invoicemanagement.model.dto.OldProduct
@@ -37,6 +36,8 @@ class ClosedInvoiceFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_closed_invoice_list, container, false)
+        val filterView = activity.findViewById<AutoCompleteTextView>(R.id.tvFilter)
+        filterView.visibility = View.GONE
         val recyclerView = view.findViewById<RecyclerView>(R.id.closed_invoice_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = adapter

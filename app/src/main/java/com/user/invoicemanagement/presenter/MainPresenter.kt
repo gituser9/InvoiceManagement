@@ -1,11 +1,23 @@
 package com.user.invoicemanagement.presenter
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.Product
-import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
+import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.view.fragment.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import jxl.Workbook
+import jxl.WorkbookSettings
+import jxl.write.Label
+import jxl.write.WritableWorkbook
+import jxl.write.WriteException
+import jxl.write.biff.RowsExceededException
+import java.io.File
+import java.io.IOException
+import java.util.*
 
 
 class MainPresenter(var view: MainView) : BasePresenter() {
@@ -79,5 +91,97 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                 .subscribe { factoryList ->
                     view.showAll(factoryList)
                 }
+    }
+
+    fun exportToExcel(context: Context) {
+        view.showWait()
+
+        model.getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { factoryList ->
+                    if (!createExcel(factoryList, context)) {
+                        view.hideWait()
+                        return@subscribe
+                    }
+
+                    sendEmail(context)
+
+                    view.hideWait()
+                }
+    }
+
+    private fun createExcel(factories: List<ProductFactory>, context: Context): Boolean {
+        val filename = "Invoice.xls"
+        val file = File(context.filesDir, filename)
+        val wbSettings = WorkbookSettings()
+        wbSettings.locale = Locale("en", "EN")
+
+        val workbook: WritableWorkbook
+
+        try {
+            workbook = Workbook.createWorkbook(file, wbSettings)
+            val sheet = workbook.createSheet("Invoice", 0)
+            var productRows = 0
+
+            try {
+                for ((factoryIndex, factory) in factories.withIndex()) {
+                    sheet.addCell(Label(0, factoryIndex + productRows, factory.name))
+                    ++productRows
+
+                    for ((productIndex, product) in factory.products!!.withIndex()) {
+                        sheet.addCell(Label(0, productIndex + productRows, product.name))
+                        sheet.addCell(Label(1, productIndex + productRows, product.weightOnStore.toString()))
+                        sheet.addCell(Label(2, productIndex + productRows, product.weightInFridge.toString()))
+                        sheet.addCell(Label(3, productIndex + productRows, product.weightInStorage.toString()))
+                        sheet.addCell(Label(4, productIndex + productRows, product.weight4.toString()))
+                        sheet.addCell(Label(5, productIndex + productRows, product.weight5.toString()))
+                        sheet.addCell(Label(6, productIndex + productRows, product.sellingPrice.toString()))
+                        sheet.addCell(Label(7, productIndex + productRows, product.purchasePrice.toString()))
+                        sheet.addCell(Label(8, productIndex + productRows, product.purchasePriceSummary.toString()))
+                        sheet.addCell(Label(9, productIndex + productRows, product.purchasePriceSummary.toString()))
+                    }
+
+                    productRows += factory.products?.size ?: 0
+                }
+            } catch (e: RowsExceededException) {
+                return false
+            } catch (e: WriteException) {
+                return false
+            }
+
+            workbook.write()
+
+            try {
+                workbook.close()
+            } catch (e: WriteException) {
+                return false
+            }
+        } catch (e: IOException) {
+            return false
+        }
+
+        return true
+    }
+
+    private fun sendEmail(context: Context) {
+        val filename = "Invoice.xls"
+        val file = File(context.filesDir, filename)
+        val path = Uri.fromFile(file)
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        // set the type to 'email'
+        emailIntent.type = "vnd.android.cursor.dir/email"
+        val to = arrayOf("jobmail862@gmail.com")
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to)
+
+        // the attachment
+        emailIntent.putExtra(Intent.EXTRA_STREAM, path)
+
+        // the mail subject
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+
+        context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 }

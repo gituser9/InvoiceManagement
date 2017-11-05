@@ -8,8 +8,8 @@ import android.support.v7.app.AlertDialog
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.data.Summary
 import kotlinx.android.synthetic.main.dialog_summary.view.*
+import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.util.*
 
 
 class SummaryDialogFragment : DialogFragment() {
@@ -26,7 +26,12 @@ class SummaryDialogFragment : DialogFragment() {
             view.purchaseSummary.text = arguments.getString("purchaseSummary")
             view.sellingSummary.text = arguments.getString("sellingSummary")
         }*/
-        val baseFormat = NumberFormat.getCurrencyInstance(Locale("ru"))
+
+        val baseFormat = NumberFormat.getCurrencyInstance()
+        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
+        decimalFormatSymbols.currencySymbol = ""
+        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
+
         view.purchaseSummary.text = baseFormat.format(summary.purchaseSummary)
         view.sellingSummary.text = baseFormat.format(summary.sellingSummary)
 

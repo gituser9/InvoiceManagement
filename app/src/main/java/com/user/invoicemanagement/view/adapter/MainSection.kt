@@ -13,15 +13,15 @@ import com.user.invoicemanagement.view.fragment.MainView
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class MainSection(sectionParameters: SectionParameters, private val factory: ProductFactory, private var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
 
     private var footerHolder: MainFooterViewHolder? = null
-    private val baseFormat = NumberFormat.getCurrencyInstance(Locale("ru"))
+    private val baseFormat = NumberFormat.getCurrencyInstance()
 
 
     override fun getContentItemsTotal(): Int = list.size
@@ -31,6 +31,10 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
     override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val itemHolder = holder as MainViewHolder
         val product = list[position]
+
+        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
+        decimalFormatSymbols.currencySymbol = ""
+        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
 
         itemHolder.edtName.setText(product.name)
         itemHolder.btnWeightOnStore.setText(product.weightOnStore.toString())

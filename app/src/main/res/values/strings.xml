@@ -21,4 +21,6 @@
     <string name="search">Search</string>
     <string name="input_new_weight">Set  Weight</string>
     <string name="reset">Reset</string>
+    <string name="open">Open</string>
+    <string name="export_to_excel">Export to Excel</string>
 </resources>
