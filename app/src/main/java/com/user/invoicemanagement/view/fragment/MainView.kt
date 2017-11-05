@@ -1,8 +1,10 @@
 package com.user.invoicemanagement.view.fragment
 
+import android.widget.Button
 import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
+import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
 
 
 interface MainView : BaseView {
@@ -20,5 +22,7 @@ interface MainView : BaseView {
     fun showEditFactoryDialog(factory: ProductFactory)
 
     fun showSummaryDialog(summary: Summary)
+
+    fun showSetWeightDialog(button: Button)
 
 }

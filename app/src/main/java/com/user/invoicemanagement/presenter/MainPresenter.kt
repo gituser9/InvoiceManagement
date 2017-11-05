@@ -2,6 +2,7 @@ package com.user.invoicemanagement.presenter
 
 import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.Product
+import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
 import com.user.invoicemanagement.view.fragment.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

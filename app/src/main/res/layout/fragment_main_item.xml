@@ -29,11 +29,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp">
 
-        <EditText
+        <Button
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/btnWeightOnStore"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <!--<EditText
             android:id="@+id/edtWeightOnStore"
             android:inputType="number"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <!-- Weight On Fridge -->
@@ -42,11 +47,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
+        <Button
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/btnWeightOnFridge"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <!--<EditText
             android:id="@+id/edtWeightOnFridge"
             android:inputType="number"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <!-- Weight On Storage -->
@@ -55,11 +65,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
+        <Button
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/btnWeightOnStorage"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <!--<EditText
             android:id="@+id/edtWeightOnStorage"
             android:inputType="number"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <!-- Weight 4 -->
@@ -68,11 +83,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
+        <Button
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/btnWeight4"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <!--<EditText
             android:id="@+id/edtWeight4"
             android:inputType="number"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <!-- Weight 5 -->
@@ -81,11 +101,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
+        <Button
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/btnWeight5"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <!--<EditText
             android:id="@+id/edtWeight5"
             android:inputType="number"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <!-- Purchase Price -->

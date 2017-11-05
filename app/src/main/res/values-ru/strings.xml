@@ -19,4 +19,6 @@
     <string name="summary">Итог</string>
     <string name="close_invoice">Закрыть накладную</string>
     <string name="search">Поиск</string>
+    <string name="input_new_weight">Set  Weight</string>
+    <string name="reset">Reset</string>
 </resources>

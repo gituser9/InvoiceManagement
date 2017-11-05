@@ -33,14 +33,18 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         val product = list[position]
 
         itemHolder.edtName.setText(product.name)
-        itemHolder.edtWeightOnStore.setText(product.weightOnStore.toString())
-        itemHolder.edtWeightInFridge.setText(product.weightInFridge.toString())
-        itemHolder.edtWeightInStorage.setText(product.weightInStorage.toString())
-        itemHolder.edtWeight4.setText(product.weight4.toString())
-        itemHolder.edtWeight5.setText(product.weight5.toString())
+        itemHolder.btnWeightOnStore.setText(product.weightOnStore.toString())
+        itemHolder.btnWeightInFridge.setText(product.weightInFridge.toString())
+        itemHolder.btnWeightInStorage.setText(product.weightInStorage.toString())
+        itemHolder.btnWeight4.setText(product.weight4.toString())
+        itemHolder.btnWeight5.setText(product.weight5.toString())
 
-        itemHolder.edtPurchasePrice.setText(product.purchasePrice.toString())
-        itemHolder.edtSellingPrice.setText(product.sellingPrice.toString())
+        if (product.purchasePrice != 0f) {
+            itemHolder.edtPurchasePrice.setText(product.purchasePrice.toString())
+        }
+        if (product.sellingPrice != 0f) {
+            itemHolder.edtSellingPrice.setText(product.sellingPrice.toString())
+        }
 
         itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
         itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
@@ -54,24 +58,25 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
                 .subscribe { _ ->
                     mainView.updateProduct(getProductViewData(itemHolder, product.id))
                 }
-        RxTextView.afterTextChangeEvents(itemHolder.edtWeightOnStore)
-                .debounce(1000, TimeUnit.MILLISECONDS)
+        itemHolder.btnWeightOnStore.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightOnStore) }
+        itemHolder.btnWeightInFridge.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInFridge) }
+        itemHolder.btnWeightInStorage.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInStorage) }
+        itemHolder.btnWeight4.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeight4) }
+        itemHolder.btnWeight5.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeight5) }
+
+        RxTextView.afterTextChangeEvents(itemHolder.btnWeightOnStore)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.edtWeightInFridge)
-                .debounce(1000, TimeUnit.MILLISECONDS)
+        RxTextView.afterTextChangeEvents(itemHolder.btnWeightInFridge)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.edtWeightInStorage)
-                .debounce(1000, TimeUnit.MILLISECONDS)
+        RxTextView.afterTextChangeEvents(itemHolder.btnWeightInStorage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.edtWeight4)
-                .debounce(1000, TimeUnit.MILLISECONDS)
+        RxTextView.afterTextChangeEvents(itemHolder.btnWeight4)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.edtWeight5)
-                .debounce(1000, TimeUnit.MILLISECONDS)
+        RxTextView.afterTextChangeEvents(itemHolder.btnWeight5)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ -> updateSummaryData(itemHolder, product) }
         RxTextView.afterTextChangeEvents(itemHolder.edtPurchasePrice)
@@ -159,13 +164,13 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         val product = Product()
         product.id = id
         product.name = holder.edtName.text.toString()
-        product.weightOnStore = holder.edtWeightOnStore.text.toString().toFloat()
-        product.weightInFridge = holder.edtWeightInFridge.text.toString().toFloat()
-        product.weightInStorage = holder.edtWeightInStorage.text.toString().toFloat()
-        product.weight4 = holder.edtWeight4.text.toString().toFloat()
-        product.weight5 = holder.edtWeight5.text.toString().toFloat()
-        product.purchasePrice = holder.edtPurchasePrice.text.toString().toFloat()
-        product.sellingPrice = holder.edtSellingPrice.text.toString().toFloat()
+        product.weightOnStore = holder.btnWeightOnStore.text.toString().toFloatOrNull() ?: 0f
+        product.weightInFridge = holder.btnWeightInFridge.text.toString().toFloatOrNull() ?: 0f
+        product.weightInStorage = holder.btnWeightInStorage.text.toString().toFloatOrNull() ?: 0f
+        product.weight4 = holder.btnWeight4.text.toString().toFloatOrNull() ?: 0f
+        product.weight5 = holder.btnWeight5.text.toString().toFloatOrNull() ?: 0f
+        product.purchasePrice = holder.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
+        product.sellingPrice = holder.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
 
         return product
     }
