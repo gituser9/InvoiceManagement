@@ -100,7 +100,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { factoryList ->
-                    if (!createExcel(factoryList, context)) {
+                    if (!createExcel(factoryList)) {
                         view.hideWait()
                         return@subscribe
                     }
@@ -111,7 +111,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                 }
     }
 
-    private fun createExcel(factories: List<ProductFactory>, context: Context): Boolean {
+    private fun createExcel(factories: List<ProductFactory>): Boolean {
         val filename = "Invoice.xls"
 
         //Saving file in external storage
@@ -148,7 +148,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                         sheet.addCell(Label(5, productIndex + productRows, product.weight5.toString()))
                         sheet.addCell(Label(6, productIndex + productRows, product.sellingPrice.toString()))
                         sheet.addCell(Label(7, productIndex + productRows, product.purchasePrice.toString()))
-                        sheet.addCell(Label(8, productIndex + productRows, product.purchasePriceSummary.toString()))
+                        sheet.addCell(Label(8, productIndex + productRows, product.sellingPriceSummary.toString()))
                         sheet.addCell(Label(9, productIndex + productRows, product.purchasePriceSummary.toString()))
                     }
 

@@ -33,12 +33,11 @@ class SetWeightDialogFragment() : DialogFragment() {
             button.setText("0.0")
         }
         view.findViewById<Button>(R.id.btnWeightPlus).setOnClickListener {
-            dismiss()
             val oldValue = button.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
             val value = edtNewWeight.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
 
             button.setText(Constant.priceFormat.format(oldValue + value).replace(',', '.'))
-
+            dismiss()
         }
 
         return builder.setView(view).setCancelable(true).create()
