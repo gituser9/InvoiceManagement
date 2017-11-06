@@ -12,7 +12,6 @@ import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.data.Summary
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
-import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.presenter.MainPresenter
 import com.user.invoicemanagement.view.adapter.FilterAutoCompleteAdapter
 import com.user.invoicemanagement.view.adapter.MainSection
@@ -105,7 +104,8 @@ class MainFragment : BaseFragment(), MainView {
                 .build()
 
         for (item in list) {
-            adapter.addSection(MainSection(params, item, item.products!!, this))
+            val section = MainSection(params, item, item.products!!, this)
+            adapter.addSection(section)
         }
 
         adapter.notifyDataSetChanged()
@@ -150,25 +150,7 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun showSetWeightDialog(button: Button) {
         val dialog = SetWeightDialogFragment()
-        dialog.minusButtonListener = View.OnClickListener { v: View? ->
-            val oldValue = button.text.toString().toFloatOrNull() ?: 0f
-            val value = dialog.edtNewWeight.text.toString().toFloatOrNull() ?: 0f
-            button.text = Constant.priceFormat.format(oldValue - value)
-            dialog.dismiss()
-            hideKeyboard()
-        }
-        dialog.resetButtonListener = View.OnClickListener { v: View? ->
-            button.text = "0.0"
-            dialog.dismiss()
-            hideKeyboard()
-        }
-        dialog.plusButtonListener = View.OnClickListener { v: View? ->
-            val oldValue = button.text.toString().toFloatOrNull() ?: 0f
-            val value = dialog.edtNewWeight.text.toString().toFloatOrNull() ?: 0f
-            button.text = Constant.priceFormat.format(oldValue + value)
-            dialog.dismiss()
-            hideKeyboard()
-        }
+        dialog.button = button
 
         dialog.show(activity.supportFragmentManager, "set weight")
     }

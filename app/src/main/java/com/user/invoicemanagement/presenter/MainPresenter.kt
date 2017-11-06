@@ -3,6 +3,7 @@ package com.user.invoicemanagement.presenter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
@@ -21,7 +22,6 @@ import java.util.*
 
 
 class MainPresenter(var view: MainView) : BasePresenter() {
-
 
     init {
         model = ModelImpl()
@@ -113,7 +113,17 @@ class MainPresenter(var view: MainView) : BasePresenter() {
 
     private fun createExcel(factories: List<ProductFactory>, context: Context): Boolean {
         val filename = "Invoice.xls"
-        val file = File(context.filesDir, filename)
+
+        //Saving file in external storage
+        val sdCard = Environment.getExternalStorageDirectory()
+        val directory = File(sdCard.getAbsolutePath() + "/invoices")
+
+        //create directory if not exist
+        if (!directory.isDirectory()) {
+            directory.mkdirs()
+        }
+
+        val file = File(directory, filename)
         val wbSettings = WorkbookSettings()
         wbSettings.locale = Locale("en", "EN")
 
@@ -166,7 +176,20 @@ class MainPresenter(var view: MainView) : BasePresenter() {
 
     private fun sendEmail(context: Context) {
         val filename = "Invoice.xls"
-        val file = File(context.filesDir, filename)
+//        val file = File(context.filesDir, filename)
+
+        //Saving file in external storage
+        val sdCard = Environment.getExternalStorageDirectory()
+        val directory = File(sdCard.getAbsolutePath() + "/invoices")
+
+        //create directory if not exist
+        if (!directory.isDirectory()) {
+            directory.mkdirs()
+        }
+
+        val file = File(directory, filename)
+
+
         val path = Uri.fromFile(file)
         val emailIntent = Intent(Intent.ACTION_SEND)
         emailIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

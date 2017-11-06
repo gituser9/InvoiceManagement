@@ -28,23 +28,23 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val btnDeleteProduct: ImageButton = itemView.btnDeleteProduct
 
     fun purchasePriceSummary(): Float {
-        val edtWeightOnStoreFloat =  btnWeightOnStore.text.toString().toFloatOrNull() ?: 0f
-        val edtWeightInFridgeFloat =  btnWeightInFridge.text.toString().toFloatOrNull() ?: 0f
-        val edtWeightInStorageFloat =  btnWeightInStorage.text.toString().toFloatOrNull() ?: 0f
-        val edtWeight4Float =  btnWeight4.text.toString().toFloatOrNull() ?: 0f
-        val edtWeight5Float =  btnWeight5.text.toString().toFloatOrNull() ?: 0f
-        val edtPurchasePriceFloat =  edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
+        val edtWeightOnStoreFloat =  btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeightInFridgeFloat =  btnWeightInFridge.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeightInStorageFloat =  btnWeightInStorage.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeight4Float =  btnWeight4.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeight5Float =  btnWeight5.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtPurchasePriceFloat =  edtPurchasePrice.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
 
         return (edtWeightOnStoreFloat + edtWeightInFridgeFloat + edtWeightInStorageFloat + edtWeight4Float + edtWeight5Float) * edtPurchasePriceFloat
     }
 
     fun sellingPriceSummary(): Float {
-        val edtWeightOnStoreFloat =  btnWeightOnStore.text.toString().toFloatOrNull() ?: 0f
-        val edtWeightInFridgeFloat =  btnWeightInFridge.text.toString().toFloatOrNull() ?: 0f
-        val edtWeightInStorageFloat =  btnWeightInStorage.text.toString().toFloatOrNull() ?: 0f
-        val edtWeight4Float =  btnWeight4.text.toString().toFloatOrNull() ?: 0f
-        val edtWeight5Float =  btnWeight5.text.toString().toFloatOrNull() ?: 0f
-        val edtSellingPriceFloat =  edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
+        val edtWeightOnStoreFloat =  btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeightInFridgeFloat =  btnWeightInFridge.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeightInStorageFloat =  btnWeightInStorage.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeight4Float =  btnWeight4.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtWeight5Float =  btnWeight5.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        val edtSellingPriceFloat =  edtSellingPrice.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
 
         return (edtWeightOnStoreFloat + edtWeightInFridgeFloat + edtWeightInStorageFloat + edtWeight4Float + edtWeight5Float) * edtSellingPriceFloat
     }

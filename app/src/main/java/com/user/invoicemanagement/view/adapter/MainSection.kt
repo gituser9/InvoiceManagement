@@ -37,11 +37,11 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
 
         itemHolder.edtName.setText(product.name)
-        itemHolder.btnWeightOnStore.setText(product.weightOnStore.toString())
-        itemHolder.btnWeightInFridge.setText(product.weightInFridge.toString())
-        itemHolder.btnWeightInStorage.setText(product.weightInStorage.toString())
-        itemHolder.btnWeight4.setText(product.weight4.toString())
-        itemHolder.btnWeight5.setText(product.weight5.toString())
+        itemHolder.btnWeightOnStore.text = product.weightOnStore.toString()
+        itemHolder.btnWeightInFridge.text = product.weightInFridge.toString()
+        itemHolder.btnWeightInStorage.text = product.weightInStorage.toString()
+        itemHolder.btnWeight4.text = product.weight4.toString()
+        itemHolder.btnWeight5.text = product.weight5.toString()
 
         if (product.purchasePrice != 0f) {
             itemHolder.edtPurchasePrice.setText(product.purchasePrice.toString())
@@ -56,17 +56,17 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         itemHolder.btnDeleteProduct.setOnClickListener {
             mainView.deleteProduct(product.id)
         }
-        RxTextView.afterTextChangeEvents(itemHolder.edtName)
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ ->
-                    mainView.updateProduct(getProductViewData(itemHolder, product.id))
-                }
+
         itemHolder.btnWeightOnStore.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightOnStore) }
         itemHolder.btnWeightInFridge.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInFridge) }
         itemHolder.btnWeightInStorage.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInStorage) }
         itemHolder.btnWeight4.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeight4) }
         itemHolder.btnWeight5.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeight5) }
+
+        RxTextView.afterTextChangeEvents(itemHolder.edtName)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ -> updateSummaryData(itemHolder, product) }
 
         RxTextView.afterTextChangeEvents(itemHolder.btnWeightOnStore)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,6 +83,7 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         RxTextView.afterTextChangeEvents(itemHolder.btnWeight5)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ -> updateSummaryData(itemHolder, product) }
+
         RxTextView.afterTextChangeEvents(itemHolder.edtPurchasePrice)
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -168,11 +169,13 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         val product = Product()
         product.id = id
         product.name = holder.edtName.text.toString()
-        product.weightOnStore = holder.btnWeightOnStore.text.toString().toFloatOrNull() ?: 0f
-        product.weightInFridge = holder.btnWeightInFridge.text.toString().toFloatOrNull() ?: 0f
-        product.weightInStorage = holder.btnWeightInStorage.text.toString().toFloatOrNull() ?: 0f
-        product.weight4 = holder.btnWeight4.text.toString().toFloatOrNull() ?: 0f
-        product.weight5 = holder.btnWeight5.text.toString().toFloatOrNull() ?: 0f
+
+        product.weightOnStore = holder.btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        product.weightInFridge = holder.btnWeightInFridge.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        product.weightInStorage = holder.btnWeightInStorage.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        product.weight4 = holder.btnWeight4.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+        product.weight5 = holder.btnWeight5.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+
         product.purchasePrice = holder.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
         product.sellingPrice = holder.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
 

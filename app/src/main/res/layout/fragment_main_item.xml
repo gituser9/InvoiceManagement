@@ -17,23 +17,22 @@
         <EditText
             android:id="@+id/edtName"
             android:inputType="text"
-            android:layout_width="256dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <!-- Weight on store -->
     <LinearLayout
-        android:layout_marginLeft="32dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp">
+        android:layout_height="wrap_content">
 
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeightOnStore"
             android:layout_width="80dp"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <!-- Weight On Fridge -->
@@ -47,6 +46,7 @@
             android:id="@+id/btnWeightOnFridge"
             android:layout_width="80dp"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <!-- Weight On Storage -->
@@ -60,6 +60,7 @@
             android:id="@+id/btnWeightOnStorage"
             android:layout_width="80dp"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <!-- Weight 4 -->
@@ -73,6 +74,7 @@
             android:id="@+id/btnWeight4"
             android:layout_width="80dp"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <!-- Weight 5 -->
@@ -86,6 +88,7 @@
             android:id="@+id/btnWeight5"
             android:layout_width="80dp"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <!-- Selling Price -->
