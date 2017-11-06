@@ -30,7 +30,7 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeightOnStore"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -44,7 +44,7 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeightOnFridge"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -58,7 +58,7 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeightOnStorage"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -72,7 +72,7 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeight4"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -86,7 +86,7 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeight5"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -101,7 +101,8 @@
             android:id="@+id/edtSellingPrice"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="numberSigned|numberDecimal"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Purchase Price -->
@@ -116,7 +117,8 @@
             android:id="@+id/edtPurchasePrice"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="numberSigned|numberDecimal"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Selling Price Summary -->
@@ -139,11 +141,11 @@
     <!-- Purchase Price Summary -->
     <LinearLayout
         android:paddingTop="11dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp">
+        android:layout_marginLeft="8dp">
 
         <TextView
             android:id="@+id/tvPurchasePriceSummary"

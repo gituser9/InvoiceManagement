@@ -63,7 +63,7 @@ class ClosedInvoiceFragment : BaseFragment() {
             }
         }
 
-        tvInvoiceSummary.text = "Total summary: $purchaseSummary - $sellingSummary"
+        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": $sellingSummary - $purchaseSummary"
         adapter.notifyDataSetChanged()
     }
 

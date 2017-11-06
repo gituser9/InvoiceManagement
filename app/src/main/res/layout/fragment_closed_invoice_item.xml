@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/edtName"
-            android:layout_width="256dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/edtWeightOnStore"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -42,7 +42,7 @@
 
         <TextView
             android:id="@+id/edtWeightOnFridge"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/edtWeightOnStorage"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/edtWeight4"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -78,21 +78,21 @@
 
         <TextView
             android:id="@+id/edtWeight5"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <!-- Purchase Price -->
     <LinearLayout
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="64dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/edtPurchasePrice"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:textStyle="bold" />
     </LinearLayout>
@@ -105,7 +105,7 @@
 
         <TextView
             android:id="@+id/edtSellingPrice"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:textStyle="bold" />
     </LinearLayout>
@@ -120,7 +120,7 @@
 
         <TextView
             android:id="@+id/tvPurchasePriceSummary"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:textStyle="bold" />
     </LinearLayout>
@@ -135,7 +135,7 @@
 
         <TextView
             android:id="@+id/tvSellingPriceSummary"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:textStyle="bold" />
     </LinearLayout>
