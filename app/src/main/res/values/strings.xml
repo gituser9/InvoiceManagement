@@ -26,4 +26,6 @@
     <string name="total_summary">Total summary</string>
     <string name="add">Add</string>
     <string name="save_success">Save success</string>
+    <string name="deleting">Deleting</string>
+    <string name="delete_product">Delete %s?</string>
 </resources>

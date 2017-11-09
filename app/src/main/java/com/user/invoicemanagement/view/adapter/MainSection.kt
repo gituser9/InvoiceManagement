@@ -20,9 +20,14 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
     private var footerHolder: MainFooterViewHolder? = null
     private val baseFormat = NumberFormat.getCurrencyInstance()
+    private var holders = mutableListOf<MainViewHolder>()
 
-    var holders = mutableListOf<MainViewHolder>()
 
+    init {
+        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
+        decimalFormatSymbols.currencySymbol = ""
+        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
+    }
 
     override fun getContentItemsTotal(): Int = list.size
 
@@ -34,11 +39,12 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
         holders.add(itemHolder)
         itemHolder.product = product
-
-        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
-        decimalFormatSymbols.currencySymbol = ""
-        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
-
+        itemHolder.setListener(View.OnLongClickListener {
+            if (itemHolder.product != null) {
+                mainView.deleteProduct(itemHolder.product!!)
+            }
+            true
+        })
         itemHolder.edtName.setText(product.name)
         itemHolder.btnWeightOnStore.text = product.weightOnStore.toString()
         itemHolder.btnWeightInFridge.text = product.weightInFridge.toString()
@@ -62,46 +68,16 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
         itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
         itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
 
-        itemHolder.btnDeleteProduct.setOnClickListener {
+        /*itemHolder.btnDeleteProduct.setOnClickListener {
             holders.remove(itemHolder)
-            mainView.deleteProduct(product.id)
-        }
+            mainView.deleteProduct(product)
+        }*/
 
         itemHolder.btnWeightOnStore.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightOnStore, product, WeightEnum.WEIGHT_1) }
         itemHolder.btnWeightInFridge.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInFridge, product, WeightEnum.WEIGHT_2) }
         itemHolder.btnWeightInStorage.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInStorage, product, WeightEnum.WEIGHT_3) }
         itemHolder.btnWeight4.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeight4, product, WeightEnum.WEIGHT_4) }
         itemHolder.btnWeight5.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeight5, product, WeightEnum.WEIGHT_5) }
-
-        /*RxTextView.afterTextChangeEvents(itemHolder.edtName)
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-
-        RxTextView.afterTextChangeEvents(itemHolder.btnWeightOnStore)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.btnWeightInFridge)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.btnWeightInStorage)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.btnWeight4)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.btnWeight5)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-
-        RxTextView.afterTextChangeEvents(itemHolder.edtPurchasePrice)
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }
-        RxTextView.afterTextChangeEvents(itemHolder.edtSellingPrice)
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _ -> updateSummaryData(itemHolder, product) }*/
     }
 
     override fun getHeaderViewHolder(view: View): RecyclerView.ViewHolder = MainHeaderViewHolder(view)

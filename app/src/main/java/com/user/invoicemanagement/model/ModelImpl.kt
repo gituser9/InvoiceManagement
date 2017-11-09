@@ -60,7 +60,10 @@ class ModelImpl : Model {
 
     override fun deleteFactory(id: Long) {
         val products = (select from Product::class where Product_Table.factoryId.eq(id)).list
-        products.forEach { item -> item.delete() }
+
+        for (item in products) {
+            item.delete()
+        }
 
         val factory = (select from ProductFactory::class where (ProductFactory_Table.id.eq(id))).result
         factory?.delete()
@@ -75,15 +78,17 @@ class ModelImpl : Model {
     override fun getSummary(): Observable<Summary> {
         var purchaseSummary = 0f
         var sellingSummary = 0f
-        val products = (select from Product::class).list
+        val factories = (select from ProductFactory::class).list
 
-        products.forEach { product: Product ->
-            val sellingPriceSummary = (product.weightOnStore + product.weightInFridge + product.weightInStorage + product.weight4 + product.weight5) * product.sellingPrice
-            val purchasePriceSummary = (product.weightOnStore + product.weightInFridge + product.weightInStorage + product.weight4 + product.weight5) * product.purchasePrice
+        for (factory in factories) {
+            val products = (select from Product::class where Product_Table.factoryId.eq(factory.id)).list
+            products.forEach { product: Product ->
+                val sellingPriceSummary = (product.weightOnStore + product.weightInFridge + product.weightInStorage + product.weight4 + product.weight5) * product.sellingPrice
+                val purchasePriceSummary = (product.weightOnStore + product.weightInFridge + product.weightInStorage + product.weight4 + product.weight5) * product.purchasePrice
 
-
-            purchaseSummary += purchasePriceSummary
-            sellingSummary += sellingPriceSummary
+                purchaseSummary += purchasePriceSummary
+                sellingSummary += sellingPriceSummary
+            }
         }
 
         return Observable.just(Summary(purchaseSummary, sellingSummary))

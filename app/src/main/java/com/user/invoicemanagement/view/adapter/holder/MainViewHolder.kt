@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import com.user.invoicemanagement.model.dto.Product
 import kotlinx.android.synthetic.main.fragment_main_item.view.*
@@ -34,7 +33,8 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tvPurchasePriceSummary: TextView = itemView.tvPurchasePriceSummary
     val tvSellingPriceSummary: TextView = itemView.tvSellingPriceSummary
 
-    val btnDeleteProduct: ImageButton = itemView.btnDeleteProduct
+    //val btnDeleteProduct: ImageButton = itemView.btnDeleteProduct
+
 
     fun purchasePriceSummary(): Float {
         val edtWeightOnStoreFloat =  btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
@@ -56,6 +56,10 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val edtSellingPriceFloat =  edtSellingPrice.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
 
         return (edtWeightOnStoreFloat + edtWeightInFridgeFloat + edtWeightInStorageFloat + edtWeight4Float + edtWeight5Float) * edtSellingPriceFloat
+    }
+
+    fun setListener(longClick: View.OnLongClickListener) {
+        itemView.setOnLongClickListener(longClick)
     }
 
 }

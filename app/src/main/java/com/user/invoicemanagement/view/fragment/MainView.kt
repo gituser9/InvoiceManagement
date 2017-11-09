@@ -13,7 +13,7 @@ interface MainView : BaseView {
 
     fun addNewProduct(factoryId: Long)
 
-    fun deleteProduct(id: Long)
+    fun deleteProduct(product: Product)
 
     fun updateProduct(product: Product)
 

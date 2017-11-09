@@ -2,6 +2,7 @@ package com.user.invoicemanagement.view.fragment
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -63,7 +64,6 @@ class MainFragment : BaseFragment(), MainView {
             filterView.setText(product.name)
             filter(product.name)
         }
-        filterView.clearFocus()
 
         fab.setOnClickListener {
             saveAll(true)
@@ -122,8 +122,14 @@ class MainFragment : BaseFragment(), MainView {
         presenter.addNewProduct(factoryId)
     }
 
-    override fun deleteProduct(id: Long) {
-        presenter.deleteProduct(id)
+    override fun deleteProduct(product: Product) {
+        AlertDialog.Builder(context)
+                .setIcon(R.drawable.ic_delete)
+                .setTitle(R.string.deleting)
+                .setMessage(String.format(activity.getString(R.string.delete_product), product.name))
+                .setPositiveButton(R.string.delete) { _, _ -> presenter.deleteProduct(product.id) }
+                .setNegativeButton(R.string.cancel, null)
+                .show()
     }
 
     override fun updateProduct(product: Product) {

@@ -26,4 +26,6 @@
     <string name="total_summary">Общий итог</string>
     <string name="add">Добавить</string>
     <string name="save_success">Сохранено успешно</string>
+    <string name="deleting">Удаление</string>
+    <string name="delete_product">Удалить %s?</string>
 </resources>

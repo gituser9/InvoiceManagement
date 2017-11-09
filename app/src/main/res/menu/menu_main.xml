@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/add_manufacturer"
@@ -12,7 +13,8 @@
     <item
         android:id="@+id/show_summary"
         android:title="@string/summary"
-        android:icon="@drawable/ic_add" />
+        android:icon="@drawable/ic_receipt"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/excel_export"
         android:title="@string/export_to_excel"

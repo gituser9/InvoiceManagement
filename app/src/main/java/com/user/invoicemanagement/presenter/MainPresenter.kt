@@ -159,6 +159,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                     }
 
                     productRows += factory.products?.size ?: 0
+                    ++productRows
                 }
             } catch (e: RowsExceededException) {
                 return false
@@ -185,7 +186,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
         val sdCard = Environment.getExternalStorageDirectory()
         val directory = File(sdCard.getAbsolutePath() + "/invoices")
 
-        if (!directory.isDirectory()) {
+        if (!directory.isDirectory) {
             directory.mkdirs()
         }
 
