@@ -7,4 +7,6 @@ interface BaseView {
     fun filter(name: String)
 
     fun getAll()
+
+    fun showToast(message: String)
 }

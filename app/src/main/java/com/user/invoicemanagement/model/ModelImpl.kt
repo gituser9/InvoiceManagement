@@ -21,14 +21,18 @@ class ModelImpl : Model {
         newFactory.insert()
     }
 
-    override fun addNewProduct(factoryId: Long) {
-        try {
+    override fun addNewProduct(factoryId: Long): Observable<Product>? {
+        return try {
             val product = Product()
             product.factoryId = factoryId
 
-            product.insert()
+//            product.insert()
+            product.save()
+
+            Observable.just(product)
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
     }
 
@@ -37,8 +41,8 @@ class ModelImpl : Model {
         result?.delete()
     }
 
-    override fun updateProduct(product: Product) {
-        val result = (select from Product::class where (Product_Table.id.eq(product.id))).result ?: return
+    override fun updateProduct(product: Product): Observable<Product>? {
+        val result = (select from Product::class where (Product_Table.id.eq(product.id))).result ?: return null
 
         result.name = product.name
         result.weightOnStore = product.weightOnStore
@@ -50,6 +54,8 @@ class ModelImpl : Model {
         result.sellingPrice = product.sellingPrice
 
         result.update()
+
+        return Observable.just(result)
     }
 
     override fun deleteFactory(id: Long) {
@@ -72,8 +78,12 @@ class ModelImpl : Model {
         val products = (select from Product::class).list
 
         products.forEach { product: Product ->
-            purchaseSummary += product.purchasePriceSummary
-            sellingSummary += product.sellingPriceSummary
+            val sellingPriceSummary = (product.weightOnStore + product.weightInFridge + product.weightInStorage + product.weight4 + product.weight5) * product.sellingPrice
+            val purchasePriceSummary = (product.weightOnStore + product.weightInFridge + product.weightInStorage + product.weight4 + product.weight5) * product.purchasePrice
+
+
+            purchaseSummary += purchasePriceSummary
+            sellingSummary += sellingPriceSummary
         }
 
         return Observable.just(Summary(purchaseSummary, sellingSummary))
@@ -147,6 +157,14 @@ class ModelImpl : Model {
 
         return Observable.fromArray(results)
     }
+
+    override fun saveAll(products: List<Product>) {
+        for (item in products) {
+            item.save()
+        }
+    }
+
+
 
 
     private fun createOldFactory(factory: ProductFactory): OldProductFactory {

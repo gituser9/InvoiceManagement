@@ -32,6 +32,13 @@
             android:id="@+id/btnWeightOnStore"
             android:layout_width="60dp"
             android:layout_height="wrap_content" />
+        <EditText
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/edtWeightOnStore"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -44,6 +51,13 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeightOnFridge"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/edtWeightOnFridge"
             android:layout_width="60dp"
             android:layout_height="wrap_content" />
 
@@ -60,6 +74,13 @@
             android:id="@+id/btnWeightOnStorage"
             android:layout_width="60dp"
             android:layout_height="wrap_content" />
+        <EditText
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/edtWeightOnStorage"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -74,6 +95,13 @@
             android:id="@+id/btnWeight4"
             android:layout_width="60dp"
             android:layout_height="wrap_content" />
+        <EditText
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/edtWeight4"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -86,6 +114,13 @@
         <Button
             android:background="?android:selectableItemBackground"
             android:id="@+id/btnWeight5"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/edtWeight5"
             android:layout_width="60dp"
             android:layout_height="wrap_content" />
 

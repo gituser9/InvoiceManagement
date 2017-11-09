@@ -8,6 +8,7 @@ import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.view.fragment.MainView
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import jxl.Workbook
@@ -43,9 +44,14 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     }
 
     fun addNewProduct(factoryId: Long) {
-        model.addNewProduct(factoryId)
+        val subscription = model.addNewProduct(factoryId) ?: return
 
-        getAll()
+        subscription
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                getAll()
+            }
     }
 
     fun deleteProduct(id: Long) {
@@ -55,7 +61,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     }
 
     fun updateProduct(product: Product) {
-        model.updateProduct(product)
+        val subscription = model.updateProduct(product) ?: return
     }
 
     fun deleteFactory(id: Long) {
@@ -176,20 +182,14 @@ class MainPresenter(var view: MainView) : BasePresenter() {
 
     private fun sendEmail(context: Context) {
         val filename = "Invoice.xls"
-//        val file = File(context.filesDir, filename)
-
-        //Saving file in external storage
         val sdCard = Environment.getExternalStorageDirectory()
         val directory = File(sdCard.getAbsolutePath() + "/invoices")
 
-        //create directory if not exist
         if (!directory.isDirectory()) {
             directory.mkdirs()
         }
 
         val file = File(directory, filename)
-
-
         val path = Uri.fromFile(file)
         val emailIntent = Intent(Intent.ACTION_SEND)
         emailIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -201,10 +201,22 @@ class MainPresenter(var view: MainView) : BasePresenter() {
 
         // the attachment
         emailIntent.putExtra(Intent.EXTRA_STREAM, path)
-
-        // the mail subject
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
 
         context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
+
+    fun saveAll(products: List<Product>, successMessage: String, showMessage: Boolean) {
+        Observable.fromArray(products)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { list: List<Product> ->
+                    model.saveAll(list)
+
+                    if (showMessage) {
+                        view.showToast(successMessage)
+                    }
+                }
+    }
+
 }

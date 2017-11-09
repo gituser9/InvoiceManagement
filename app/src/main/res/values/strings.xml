@@ -24,4 +24,6 @@
     <string name="open">Open</string>
     <string name="export_to_excel">Export to Excel</string>
     <string name="total_summary">Total summary</string>
+    <string name="add">Add</string>
+    <string name="save_success">Save success</string>
 </resources>

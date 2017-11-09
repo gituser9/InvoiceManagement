@@ -1,8 +1,8 @@
 package com.user.invoicemanagement.model.dto
 
+import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
-import com.raizlabs.android.dbflow.annotation.Column
 
 
 @Table(database = DbflowDatabase::class)

@@ -14,7 +14,7 @@
     <string name="cancel">Закрыть</string>
     <string name="ok">OK</string>
     <string name="input_new_name">Новое имя</string>
-    <string name="edit_icon">Edit icon</string>
+    <string name="edit_icon">Редактировать</string>
     <string name="selling_price">Продажная цена</string>
     <string name="summary">Итог</string>
     <string name="close_invoice">Закрыть накладную</string>
@@ -22,6 +22,8 @@
     <string name="input_new_weight">Задать вес</string>
     <string name="reset">Сбросить</string>
     <string name="open">Открыть</string>
-    <string name="export_to_excel">Export to Excel</string>
+    <string name="export_to_excel">Экспорт в Excel</string>
     <string name="total_summary">Общий итог</string>
+    <string name="add">Добавить</string>
+    <string name="save_success">Сохранено успешно</string>
 </resources>

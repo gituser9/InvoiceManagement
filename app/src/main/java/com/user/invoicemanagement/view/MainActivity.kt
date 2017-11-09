@@ -1,22 +1,20 @@
 package com.user.invoicemanagement.view
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.app.ActionBarDrawerToggle
-import android.view.Menu
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.view.fragment.ArchiveFragment
 import com.user.invoicemanagement.view.fragment.MainFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    val TAG = "TAG"
-
+    private val TAG = "TAG"
     private var toggle: ActionBarDrawerToggle? = null
     private lateinit var fragmentManager: FragmentManager
 

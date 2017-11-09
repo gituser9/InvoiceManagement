@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.data.Summary
+import com.user.invoicemanagement.model.data.WeightEnum
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 import com.user.invoicemanagement.presenter.MainPresenter
@@ -62,6 +63,11 @@ class MainFragment : BaseFragment(), MainView {
             filterView.setText(product.name)
             filter(product.name)
         }
+        filterView.clearFocus()
+
+        fab.setOnClickListener {
+            saveAll(true)
+        }
     }
 
 
@@ -71,6 +77,7 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
         R.id.add_manufacturer -> {
+            saveAll()
             presenter.addNewFactory()
             true
         }
@@ -148,9 +155,11 @@ class MainFragment : BaseFragment(), MainView {
         dialog.show(activity.supportFragmentManager, "summary")
     }
 
-    override fun showSetWeightDialog(button: Button) {
+    override fun showSetWeightDialog(button: Button, product: Product, weightEnum: WeightEnum) {
         val dialog = SetWeightDialogFragment()
         dialog.button = button
+        dialog.product = product
+        dialog.weightEnum = weightEnum
 
         dialog.show(activity.supportFragmentManager, "set weight")
     }
@@ -172,4 +181,17 @@ class MainFragment : BaseFragment(), MainView {
         progressBar.visibility = View.GONE
         recycler_view.visibility = View.VISIBLE
     }
+
+    override fun saveAll(showMessage: Boolean) {
+        val list = mutableListOf<Product>()
+
+        for ((_, section) in adapter.sectionsMap) {
+            val mainSection = section as MainSection
+            list.addAll(mainSection.getViewData())
+            mainSection.updateSummaryData()
+        }
+
+        presenter.saveAll(list, activity.getString(R.string.save_success), showMessage)
+    }
+
 }

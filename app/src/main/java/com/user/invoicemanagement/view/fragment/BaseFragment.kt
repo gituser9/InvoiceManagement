@@ -1,7 +1,7 @@
 package com.user.invoicemanagement.view.fragment
 
-import android.support.v4.app.Fragment
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.support.v4.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 
@@ -13,7 +13,7 @@ abstract class BaseFragment : Fragment(), BaseView {
         imm.hideSoftInputFromWindow(activity.currentFocus.windowToken, 0)
     }
 
-    fun showToast(message: String) {
+    override fun showToast(message: String) {
         Toast.makeText(activity.baseContext, message, Toast.LENGTH_SHORT).show()
     }
 }

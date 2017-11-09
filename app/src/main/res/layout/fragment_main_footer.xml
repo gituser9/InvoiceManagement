@@ -2,26 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="@string/summary"/>
-
-    <TextView
-        android:layout_marginLeft="16dp"
-        android:id="@+id/mainFooterSellingSummary"
+    <Button
+        android:id="@+id/btnAddNew"
+        android:text="@string/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_marginLeft="16dp"
-        android:id="@+id/mainFooterPurchaseSummary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/summary"/>
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:id="@+id/mainFooterSellingSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:id="@+id/mainFooterPurchaseSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
 </LinearLayout>
