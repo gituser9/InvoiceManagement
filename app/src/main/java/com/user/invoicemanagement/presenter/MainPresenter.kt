@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
+import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
+import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.view.fragment.MainView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -100,6 +102,14 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     }
 
     fun exportToExcel(context: Context) {
+        val preferences = context.getSharedPreferences(Constant.settingsName, Context.MODE_PRIVATE)
+        val email = preferences.getString(Constant.emailForReportsKey, "")
+
+        if (email.isEmpty()) {
+            view.showAlert(R.string.email_is_required)
+            return
+        }
+
         view.showWait()
 
         model.getAll()
@@ -122,10 +132,10 @@ class MainPresenter(var view: MainView) : BasePresenter() {
 
         //Saving file in external storage
         val sdCard = Environment.getExternalStorageDirectory()
-        val directory = File(sdCard.getAbsolutePath() + "/invoices")
+        val directory = File(sdCard.absolutePath + "/invoices")
 
         //create directory if not exist
-        if (!directory.isDirectory()) {
+        if (!directory.isDirectory) {
             directory.mkdirs()
         }
 
@@ -138,28 +148,36 @@ class MainPresenter(var view: MainView) : BasePresenter() {
         try {
             workbook = Workbook.createWorkbook(file, wbSettings)
             val sheet = workbook.createSheet("Invoice", 0)
-            var productRows = 0
+            var currentRow = 0
 
             try {
-                for ((factoryIndex, factory) in factories.withIndex()) {
-                    sheet.addCell(Label(0, factoryIndex + productRows, factory.name))
-                    ++productRows
+                for (factory in factories) {
+                    sheet.addCell(Label(0, currentRow, factory.name))
+                    sheet.addCell(Label(8, currentRow, "Продажная"))
+                    sheet.addCell(Label(9, currentRow, "Закупочная"))
+                    ++currentRow
 
-                    for ((productIndex, product) in factory.products!!.withIndex()) {
-                        sheet.addCell(Label(0, productIndex + productRows, product.name))
-                        sheet.addCell(Label(1, productIndex + productRows, product.weightOnStore.toString()))
-                        sheet.addCell(Label(2, productIndex + productRows, product.weightInFridge.toString()))
-                        sheet.addCell(Label(3, productIndex + productRows, product.weightInStorage.toString()))
-                        sheet.addCell(Label(4, productIndex + productRows, product.weight4.toString()))
-                        sheet.addCell(Label(5, productIndex + productRows, product.weight5.toString()))
-                        sheet.addCell(Label(6, productIndex + productRows, product.sellingPrice.toString()))
-                        sheet.addCell(Label(7, productIndex + productRows, product.purchasePrice.toString()))
-                        sheet.addCell(Label(8, productIndex + productRows, product.sellingPriceSummary.toString()))
-                        sheet.addCell(Label(9, productIndex + productRows, product.purchasePriceSummary.toString()))
+                    if (factory.products == null || factory.products!!.isEmpty()) {
+                        currentRow += 2
+                        continue
                     }
 
-                    productRows += factory.products?.size ?: 0
-                    ++productRows
+                    for (product in factory.products!!) {
+                        sheet.addCell(Label(0, currentRow, product.name))
+                        sheet.addCell(Label(1, currentRow, product.weightOnStore.toString()))
+                        sheet.addCell(Label(2, currentRow, product.weightInFridge.toString()))
+                        sheet.addCell(Label(3, currentRow, product.weightInStorage.toString()))
+                        sheet.addCell(Label(4, currentRow, product.weight4.toString()))
+                        sheet.addCell(Label(5, currentRow, product.weight5.toString()))
+                        sheet.addCell(Label(6, currentRow, product.sellingPrice.toString()))
+                        sheet.addCell(Label(7, currentRow, product.purchasePrice.toString()))
+                        sheet.addCell(Label(8, currentRow, product.sellingPriceSummary.toString()))
+                        sheet.addCell(Label(9, currentRow, product.purchasePriceSummary.toString()))
+
+                        ++currentRow
+                    }
+
+                    ++currentRow
                 }
             } catch (e: RowsExceededException) {
                 return false
@@ -184,7 +202,7 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     private fun sendEmail(context: Context) {
         val filename = "Invoice.xls"
         val sdCard = Environment.getExternalStorageDirectory()
-        val directory = File(sdCard.getAbsolutePath() + "/invoices")
+        val directory = File(sdCard.absolutePath + "/invoices")
 
         if (!directory.isDirectory) {
             directory.mkdirs()
@@ -197,7 +215,9 @@ class MainPresenter(var view: MainView) : BasePresenter() {
 
         // set the type to 'email'
         emailIntent.type = "vnd.android.cursor.dir/email"
-        val to = arrayOf("jobmail862@gmail.com")
+        val preferences = context.getSharedPreferences(Constant.settingsName, Context.MODE_PRIVATE)
+        val email = preferences.getString(Constant.emailForReportsKey, "")
+        val to = arrayOf(email)
         emailIntent.putExtra(Intent.EXTRA_EMAIL, to)
 
         // the attachment

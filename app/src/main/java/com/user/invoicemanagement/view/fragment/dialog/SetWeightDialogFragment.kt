@@ -12,7 +12,7 @@ import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.other.Constant
 
 
-class SetWeightDialogFragment() : DialogFragment() {
+class SetWeightDialogFragment : DialogFragment() {
 
     lateinit var edtNewWeight: EditText
     lateinit var button: Button
@@ -31,43 +31,34 @@ class SetWeightDialogFragment() : DialogFragment() {
             dismiss()
             val oldValue = button.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
             val value = edtNewWeight.text.toString().toFloatOrNull() ?: 0f
-            when(weightEnum) {
-                WeightEnum.WEIGHT_1 -> { product.weightOnStore = oldValue - value }
-                WeightEnum.WEIGHT_2 -> { product.weightInFridge = oldValue - value }
-                WeightEnum.WEIGHT_3 -> { product.weightInStorage = oldValue - value }
-                WeightEnum.WEIGHT_4 -> { product.weight4 = oldValue - value }
-                WeightEnum.WEIGHT_5 -> { product.weight5 = oldValue - value }
-            }
+
+            setProductWeight(product, oldValue - value)
             button.text = Constant.priceFormat.format(oldValue - value)
         }
         view.findViewById<Button>(R.id.btnWeightReset).setOnClickListener {
             dismiss()
-            when(weightEnum) {
-                WeightEnum.WEIGHT_1 -> { product.weightOnStore = 0f }
-                WeightEnum.WEIGHT_2 -> { product.weightInFridge = 0f }
-                WeightEnum.WEIGHT_3 -> { product.weightInStorage = 0f }
-                WeightEnum.WEIGHT_4 -> { product.weight4 = 0f }
-                WeightEnum.WEIGHT_5 -> { product.weight5 = 0f }
-            }
+            setProductWeight(product, 0f)
             button.text = "0.0"
         }
         view.findViewById<Button>(R.id.btnWeightPlus).setOnClickListener {
             val oldValue = button.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
             val value = edtNewWeight.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
 
-            when(weightEnum) {
-                WeightEnum.WEIGHT_1 -> { product.weightOnStore = oldValue + value }
-                WeightEnum.WEIGHT_2 -> { product.weightInFridge = oldValue + value }
-                WeightEnum.WEIGHT_3 -> { product.weightInStorage = oldValue + value }
-                WeightEnum.WEIGHT_4 -> { product.weight4 = oldValue + value }
-                WeightEnum.WEIGHT_5 -> { product.weight5 = oldValue + value }
-            }
-
-//            editText.setText(Constant.priceFormat.format(oldValue + value).replace(',', '.'))
+            setProductWeight(product, oldValue + value)
             button.text = Constant.priceFormat.format(oldValue + value).replace(',', '.')
             dismiss()
         }
 
         return builder.setView(view).setCancelable(true).create()
+    }
+
+    private fun setProductWeight(product: Product, weightValue: Float) {
+        when(weightEnum) {
+            WeightEnum.WEIGHT_1 -> { product.weightOnStore = weightValue }
+            WeightEnum.WEIGHT_2 -> { product.weightInFridge = weightValue }
+            WeightEnum.WEIGHT_3 -> { product.weightInStorage = weightValue }
+            WeightEnum.WEIGHT_4 -> { product.weight4 = weightValue }
+            WeightEnum.WEIGHT_5 -> { product.weight5 = weightValue }
+        }
     }
 }

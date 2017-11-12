@@ -28,4 +28,12 @@
     <string name="save_success">Save success</string>
     <string name="deleting">Deleting</string>
     <string name="delete_product">Delete %s?</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_for_reports">Email For Reports</string>
+    <string name="settings">Settings</string>
+    <string name="error">Error</string>
+    <string name="email_is_required">Email is required!</string>
+    <string name="save">Save</string>
+    <string name="main">Home</string>
 </resources>

@@ -12,22 +12,13 @@ import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
 import com.user.invoicemanagement.view.fragment.MainView
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 
 class MainSection(sectionParameters: SectionParameters, private val factory: ProductFactory, var list: List<Product>, private val mainView: MainView) : StatelessSection(sectionParameters) {
 
     private var footerHolder: MainFooterViewHolder? = null
-    private val baseFormat = NumberFormat.getCurrencyInstance()
     private var holders = mutableListOf<MainViewHolder>()
 
-
-    init {
-        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
-        decimalFormatSymbols.currencySymbol = ""
-        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
-    }
 
     override fun getContentItemsTotal(): Int = list.size
 
@@ -67,11 +58,6 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
         itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
         itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
-
-        /*itemHolder.btnDeleteProduct.setOnClickListener {
-            holders.remove(itemHolder)
-            mainView.deleteProduct(product)
-        }*/
 
         itemHolder.btnWeightOnStore.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightOnStore, product, WeightEnum.WEIGHT_1) }
         itemHolder.btnWeightInFridge.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInFridge, product, WeightEnum.WEIGHT_2) }
@@ -154,8 +140,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 //        mainView.updateProduct(newProduct)
         for (item in holders) {
             if (item.product != null) {
-                item.tvPurchasePriceSummary.text = baseFormat.format(item.purchasePriceSummary())
-                item.tvSellingPriceSummary.text = baseFormat.format(item.sellingPriceSummary())
+                item.tvPurchasePriceSummary.text = Constant.baseFormat.format(item.purchasePriceSummary())
+                item.tvSellingPriceSummary.text = Constant.baseFormat.format(item.sellingPriceSummary())
                 setFooterData()
             }
         }

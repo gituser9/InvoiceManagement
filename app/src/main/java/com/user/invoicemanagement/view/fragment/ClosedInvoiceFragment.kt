@@ -16,6 +16,8 @@ import com.user.invoicemanagement.view.adapter.ClosedInvoiceSection
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_closed_invoice_list.*
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 
 class ClosedInvoiceFragment : BaseFragment() {
@@ -23,6 +25,7 @@ class ClosedInvoiceFragment : BaseFragment() {
     var invoiceId: Long = 0
     lateinit var adapter: SectionedRecyclerViewAdapter
     lateinit private var presenter: ClosedInvoicePresenter
+    private val baseFormat = NumberFormat.getCurrencyInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +49,15 @@ class ClosedInvoiceFragment : BaseFragment() {
     }
 
     fun show(invoice: ClosedInvoice) {
+        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
+        decimalFormatSymbols.currencySymbol = ""
+        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
+
         var purchaseSummary = 0f
         var sellingSummary = 0f
         val params = SectionParameters.Builder(R.layout.fragment_closed_invoice_item)
                 .headerResourceId(R.layout.fragment_closed_invoice_header)
-                .footerResourceId(R.layout.fragment_main_footer)
+                .footerResourceId(R.layout.fragment_closed_invoice_footer)
                 .build()
 
         invoice.factories?.forEach { factory: OldProductFactory? ->
@@ -63,7 +70,7 @@ class ClosedInvoiceFragment : BaseFragment() {
             }
         }
 
-        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": $sellingSummary - $purchaseSummary"
+        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": ${baseFormat.format(sellingSummary)} - ${baseFormat.format(purchaseSummary)}"
         adapter.notifyDataSetChanged()
     }
 

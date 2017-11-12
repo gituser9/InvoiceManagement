@@ -1,0 +1,29 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    tools:context="com.user.invoicemanagement.view.fragment.SettingsFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email_for_reports"
+        android:textSize="18sp" />
+    <EditText
+        android:id="@+id/edtEmailForReports"
+        android:inputType="textEmailAddress"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnSettingsSave"
+        android:layout_gravity="center"
+        android:text="@string/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

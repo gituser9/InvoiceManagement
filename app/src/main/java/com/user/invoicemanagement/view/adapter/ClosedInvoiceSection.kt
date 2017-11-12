@@ -5,10 +5,9 @@ import android.view.View
 import com.user.invoicemanagement.model.dto.OldProduct
 import com.user.invoicemanagement.model.dto.OldProductFactory
 import com.user.invoicemanagement.other.Constant
+import com.user.invoicemanagement.view.adapter.holder.ClosedInvoiceFooterViewHolder
 import com.user.invoicemanagement.view.adapter.holder.ClosedInvoiceHeaderViewHolder
 import com.user.invoicemanagement.view.adapter.holder.ClosedSectionItemViewHolder
-import com.user.invoicemanagement.view.adapter.holder.MainFooterViewHolder
-import com.user.invoicemanagement.view.adapter.holder.MainHeaderViewHolder
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import java.text.NumberFormat
@@ -48,10 +47,10 @@ class ClosedInvoiceSection(sectionParameters: SectionParameters, private val fac
         itemHolder.tvHeader.text = factory.name
     }
 
-    override fun getFooterViewHolder(view: View): RecyclerView.ViewHolder = MainFooterViewHolder(view)
+    override fun getFooterViewHolder(view: View): RecyclerView.ViewHolder = ClosedInvoiceFooterViewHolder(view)
 
     override fun onBindFooterViewHolder(holder: RecyclerView.ViewHolder?) {
-        val itemHolder = holder as MainFooterViewHolder
+        val itemHolder = holder as ClosedInvoiceFooterViewHolder
         var purchaseSummary = 0f
         var sellingSummary = 0f
 

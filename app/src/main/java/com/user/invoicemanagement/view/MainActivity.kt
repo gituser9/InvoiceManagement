@@ -9,6 +9,7 @@ import android.view.MenuItem
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.view.fragment.ArchiveFragment
 import com.user.invoicemanagement.view.fragment.MainFragment
+import com.user.invoicemanagement.view.fragment.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -59,6 +60,12 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.action_archive -> {
                     replaceFragment(ArchiveFragment(), true)
+                }
+                R.id.action_settings -> {
+                    replaceFragment(SettingsFragment(), true)
+                }
+                R.id.action_home -> {
+                    replaceFragment(MainFragment(), true)
                 }
                 else -> {}
             }

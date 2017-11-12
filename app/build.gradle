@@ -73,7 +73,6 @@ dependencies {
     compile group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
 
 
-
     // For tests
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.+'

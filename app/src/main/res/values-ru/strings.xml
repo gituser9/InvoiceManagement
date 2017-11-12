@@ -28,4 +28,10 @@
     <string name="save_success">Сохранено успешно</string>
     <string name="deleting">Удаление</string>
     <string name="delete_product">Удалить %s?</string>
+    <string name="email_for_reports">Почта для отчетов</string>
+    <string name="settings">Настройки</string>
+    <string name="error">Ошибка</string>
+    <string name="email_is_required">Почта обязательна!</string>
+    <string name="save">Сохранить</string>
+    <string name="main">Главная</string>
 </resources>

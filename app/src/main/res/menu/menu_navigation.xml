@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_home"
+        android:title="@string/main"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_home"/>
+    <item
         android:id="@+id/action_archive"
         android:title="@string/archive"
         android:orderInCategory="1"
         android:icon="@drawable/ic_view_list"/>
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_settings"/>
 </menu>
