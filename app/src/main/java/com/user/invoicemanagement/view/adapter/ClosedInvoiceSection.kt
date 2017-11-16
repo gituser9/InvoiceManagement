@@ -10,13 +10,8 @@ import com.user.invoicemanagement.view.adapter.holder.ClosedInvoiceHeaderViewHol
 import com.user.invoicemanagement.view.adapter.holder.ClosedSectionItemViewHolder
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
-import java.text.NumberFormat
-import java.util.*
 
 class ClosedInvoiceSection(sectionParameters: SectionParameters, private val factory: OldProductFactory, private var list: List<OldProduct>) : StatelessSection(sectionParameters) {
-
-    private val baseFormat = NumberFormat.getCurrencyInstance(Locale("ru"))
-
 
     override fun getContentItemsTotal(): Int = list.size
 
@@ -36,8 +31,8 @@ class ClosedInvoiceSection(sectionParameters: SectionParameters, private val fac
         itemHolder.edtPurchasePrice.text = product.purchasePrice.toString()
         itemHolder.edtSellingPrice.text = product.sellingPrice.toString()
 
-        itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
-        itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
+        itemHolder.tvPurchasePriceSummary.text = Constant.baseFormat.format(product.purchasePriceSummary)
+        itemHolder.tvSellingPriceSummary.text = Constant.baseFormat.format(product.sellingPriceSummary)
     }
 
     override fun getHeaderViewHolder(view: View): RecyclerView.ViewHolder = ClosedInvoiceHeaderViewHolder(view)
@@ -59,7 +54,7 @@ class ClosedInvoiceSection(sectionParameters: SectionParameters, private val fac
             sellingSummary += product.sellingPriceSummary
         }
 
-        itemHolder.mainFooterPurchaseSummary.text = purchaseSummary.toString()
-        itemHolder.mainFooterSellingSummary.text = sellingSummary.toString()
+        itemHolder.mainFooterPurchaseSummary.text = Constant.baseFormat.format(purchaseSummary)
+        itemHolder.mainFooterSellingSummary.text = Constant.baseFormat.format(sellingSummary)
     }
 }

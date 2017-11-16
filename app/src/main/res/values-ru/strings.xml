@@ -34,4 +34,6 @@
     <string name="email_is_required">Почта обязательна!</string>
     <string name="save">Сохранить</string>
     <string name="main">Главная</string>
+    <string name="get_db">Скачать базу данных</string>
+    <string name="upload_db">Загрузить базу данных</string>
 </resources>

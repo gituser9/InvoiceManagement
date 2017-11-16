@@ -20,6 +20,18 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/btnSettingsGetDb"
+        android:text="@string/get_db"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnSettingsUploadDb"
+        android:text="@string/upload_db"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/btnSettingsSave"
         android:layout_gravity="center"
         android:text="@string/save"

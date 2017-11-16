@@ -33,7 +33,7 @@ class SetWeightDialogFragment : DialogFragment() {
             val value = edtNewWeight.text.toString().toFloatOrNull() ?: 0f
 
             setProductWeight(product, oldValue - value)
-            button.text = Constant.priceFormat.format(oldValue - value)
+            button.text = Constant.baseFormat.format(oldValue - value)
         }
         view.findViewById<Button>(R.id.btnWeightReset).setOnClickListener {
             dismiss()
@@ -45,7 +45,7 @@ class SetWeightDialogFragment : DialogFragment() {
             val value = edtNewWeight.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
 
             setProductWeight(product, oldValue + value)
-            button.text = Constant.priceFormat.format(oldValue + value).replace(',', '.')
+            button.text = Constant.baseFormat.format(oldValue + value).replace(',', '.')
             dismiss()
         }
 

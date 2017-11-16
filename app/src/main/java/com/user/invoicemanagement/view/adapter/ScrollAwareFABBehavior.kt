@@ -1,13 +1,7 @@
 package com.user.invoicemanagement.view.adapter
 
-import android.content.Context
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
-import android.util.AttributeSet
-import android.view.View
 
-
-class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>() {
+/*class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>() {
 
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: FloatingActionButton, directTargetChild: View, target: View, axes: Int, type: Int): Boolean {
 //        return super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type)
@@ -29,5 +23,5 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) : Coordinato
         }
     }
 
-}
+}*/
 

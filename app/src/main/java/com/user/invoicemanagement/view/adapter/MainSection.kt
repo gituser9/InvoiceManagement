@@ -56,8 +56,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
             itemHolder.edtSellingPrice.setText(product.sellingPrice.toString())
         }
 
-        itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
-        itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
+        itemHolder.tvPurchasePriceSummary.text = Constant.baseFormat.format(product.purchasePriceSummary)
+        itemHolder.tvSellingPriceSummary.text = Constant.baseFormat.format(product.sellingPriceSummary)
 
         itemHolder.btnWeightOnStore.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightOnStore, product, WeightEnum.WEIGHT_1) }
         itemHolder.btnWeightInFridge.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInFridge, product, WeightEnum.WEIGHT_2) }
@@ -90,18 +90,9 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
     override fun onBindFooterViewHolder(holder: RecyclerView.ViewHolder?) {
         val itemHolder = holder as MainFooterViewHolder
-        var purchaseSummary = 0f
-        var sellingSummary = 0f
         footerHolder = itemHolder
 
-        list.forEach { product: Product ->
-            purchaseSummary += product.purchasePriceSummary
-            sellingSummary += product.sellingPriceSummary
-        }
-
-        itemHolder.mainFooterPurchaseSummary.text = purchaseSummary.toString()
-        itemHolder.mainFooterSellingSummary.text = sellingSummary.toString()
-
+        setFooterData()
         itemHolder.btnAddNew.setOnClickListener {
             mainView.saveAll()
             mainView.addNewProduct(factory.id)
@@ -118,6 +109,7 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
                 newProduct.factoryId = item.product!!.factoryId
                 newProduct.name = item.edtName.text.toString()
 
+
                 newProduct.weightOnStore = item.btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
                 newProduct.weightInFridge = item.btnWeightInFridge.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
                 newProduct.weightInStorage = item.btnWeightInStorage.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
@@ -126,6 +118,10 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
                 newProduct.purchasePrice = item.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
                 newProduct.sellingPrice = item.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
+
+                item.product!!.name = item.edtName.text.toString()
+                item.product!!.purchasePrice = item.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
+                item.product!!.sellingPrice = item.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
 
                 products.add(newProduct)
             }
@@ -136,8 +132,6 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
 
     fun updateSummaryData() {
-//        updateProductView(itemHolder, product)
-//        mainView.updateProduct(newProduct)
         for (item in holders) {
             if (item.product != null) {
                 item.tvPurchasePriceSummary.text = Constant.baseFormat.format(item.purchasePriceSummary())
@@ -145,23 +139,6 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
                 setFooterData()
             }
         }
-
-        /*itemHolder.tvPurchasePriceSummary.text = baseFormat.format(product.purchasePriceSummary)
-        itemHolder.tvSellingPriceSummary.text = baseFormat.format(product.sellingPriceSummary)
-        setFooterData()*/
-    }
-
-    private fun updateProductView(itemHolder: MainViewHolder, product: Product) {
-        product.name = itemHolder.edtName.text.toString()
-
-        product.weightOnStore = itemHolder.btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-        product.weightInFridge = itemHolder.btnWeightInFridge.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-        product.weightInStorage = itemHolder.btnWeightInStorage.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-        product.weight4 = itemHolder.btnWeight4.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-        product.weight5 = itemHolder.btnWeight5.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-
-        product.purchasePrice = itemHolder.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
-        product.sellingPrice = itemHolder.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
     }
 
     private fun setFooterData() {
@@ -176,8 +153,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
             sellingSummary += product.sellingPriceSummary
         }
 
-        footerHolder?.mainFooterPurchaseSummary?.text = purchaseSummary.toString()
-        footerHolder?.mainFooterSellingSummary?.text = sellingSummary.toString()
+        footerHolder?.mainFooterPurchaseSummary?.text = Constant.baseFormat.format(purchaseSummary)
+        footerHolder?.mainFooterSellingSummary?.text = Constant.baseFormat.format(sellingSummary)
     }
 
 

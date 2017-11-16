@@ -189,6 +189,7 @@ class MainFragment : BaseFragment(), MainView {
     }
 
     override fun saveAll(showMessage: Boolean) {
+        hideKeyboard()
         val list = mutableListOf<Product>()
 
         for ((_, section) in adapter.sectionsMap) {
