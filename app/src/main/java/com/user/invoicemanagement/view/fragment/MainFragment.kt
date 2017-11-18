@@ -22,6 +22,7 @@ import com.user.invoicemanagement.view.fragment.dialog.SetWeightDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SummaryDialogFragment
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -65,9 +66,16 @@ class MainFragment : BaseFragment(), MainView {
             filter(product.name)
         }
 
-        fab.setOnClickListener {
+        activity.fab.visibility = View.VISIBLE
+        activity.fab.setOnClickListener {
             saveAll(true)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        activity.fab.visibility = View.GONE
     }
 
 
