@@ -1,5 +1,7 @@
 package com.user.invoicemanagement.presenter
 
+import android.content.DialogInterface
+import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.ClosedInvoice
 import com.user.invoicemanagement.view.fragment.ArchiveFragment
@@ -23,8 +25,10 @@ class ArchivePresenter(private val view: ArchiveFragment) : BasePresenter() {
     }
 
     fun deleteInvoice(invoice: ClosedInvoice) {
-        model.deleteInvoice(invoice)
-        getAll()
+        view.showConfirm(R.string.delete_closed_invoice_question, DialogInterface.OnClickListener { _: DialogInterface, _: Int ->
+            model.deleteInvoice(invoice)
+            getAll()
+        })
     }
 
 }

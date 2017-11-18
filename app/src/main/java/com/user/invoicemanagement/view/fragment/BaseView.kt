@@ -1,5 +1,6 @@
 package com.user.invoicemanagement.view.fragment
 
+import android.content.DialogInterface
 
 
 interface BaseView {
@@ -13,4 +14,6 @@ interface BaseView {
     fun showToast(stringId: Int)
 
     fun showAlert(stringId: Int)
+
+    fun showConfirm(stringId: Int, listener: DialogInterface.OnClickListener)
 }

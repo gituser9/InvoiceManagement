@@ -1,6 +1,7 @@
 package com.user.invoicemanagement.view.fragment
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.inputmethod.InputMethodManager
@@ -29,6 +30,17 @@ abstract class BaseFragment : Fragment(), BaseView {
                 .setTitle(R.string.error)
                 .setMessage(stringId)
                 .setNegativeButton(R.string.cancel, { dialog, _ -> dialog.cancel() })
+                .create()
+                .show()
+    }
+
+    override fun showConfirm(stringId: Int, listener: DialogInterface.OnClickListener) {
+        AlertDialog.Builder(activity)
+                .setIcon(R.drawable.ic_error)
+                .setTitle(R.string.confirm)
+                .setMessage(stringId)
+                .setNegativeButton(R.string.cancel, { dialog, _ -> dialog.cancel() })
+                .setPositiveButton(R.string.ok, listener)
                 .create()
                 .show()
     }

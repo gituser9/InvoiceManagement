@@ -1,7 +1,6 @@
 package com.user.invoicemanagement.view.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,7 +14,8 @@ import com.user.invoicemanagement.view.adapter.ArchiveAdapter
 import com.user.invoicemanagement.view.adapter.ArchiveClickListener
 
 
-class ArchiveFragment : Fragment() {
+class ArchiveFragment : BaseFragment() {
+
 
     lateinit var adapter: ArchiveAdapter
     lateinit var presenter: ArchivePresenter
@@ -68,5 +68,12 @@ class ArchiveFragment : Fragment() {
         transaction.replace(R.id.container, fragment, "Archive")
         transaction.addToBackStack("Archive")
         transaction.commit()
+    }
+
+    override fun filter(name: String) {
+
+    }
+
+    override fun getAll() {
     }
 }

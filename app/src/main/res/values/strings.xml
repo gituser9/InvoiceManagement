@@ -38,4 +38,8 @@
     <string name="get_db">Get Database</string>
     <string name="upload_db">Upload Database</string>
     <string name="invoice_closed">Invoice closed</string>
+    <string name="close_invoice_question">Closed Invoice?</string>
+    <string name="delete_factory_question">Delete Factory?</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete_closed_invoice_question">Delete Closed Invoice?</string>
 </resources>

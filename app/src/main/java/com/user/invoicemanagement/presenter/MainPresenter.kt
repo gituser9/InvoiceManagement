@@ -1,6 +1,7 @@
 package com.user.invoicemanagement.presenter
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -67,9 +68,10 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     }
 
     fun deleteFactory(id: Long) {
-        model.deleteFactory(id)
-
-        getAll()
+        view.showConfirm(R.string.delete_factory_question, DialogInterface.OnClickListener { _: DialogInterface, _: Int ->
+            model.deleteFactory(id)
+            getAll()
+        })
     }
 
     fun updateFactory(newName: String, factoryId: Long) {
@@ -88,8 +90,11 @@ class MainPresenter(var view: MainView) : BasePresenter() {
     }
 
     fun closeInvoice() {
-        model.closeInvoice()
-        getAll()
+        view.showConfirm(R.string.close_invoice_question, DialogInterface.OnClickListener { _: DialogInterface, _: Int ->
+            model.closeInvoice()
+            getAll()
+            view.showToast(R.string.invoice_closed)
+        })
     }
 
     fun filter(name: String) {
