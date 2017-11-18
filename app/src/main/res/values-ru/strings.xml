@@ -37,8 +37,9 @@
     <string name="get_db">Скачать базу данных</string>
     <string name="upload_db">Загрузить базу данных</string>
     <string name="invoice_closed">Накладная закрыта</string>
-    <string name="close_invoice_question">Closed Invoice?</string>
-    <string name="delete_factory_question">Delete Factory?</string>
-    <string name="confirm">Confirm</string>
-    <string name="delete_closed_invoice_question">Delete Closed Invoice?</string>
+    <string name="close_invoice_question">Закрыть накладную?</string>
+    <string name="delete_factory_question">Удалить завод?</string>
+    <string name="confirm">Подтверждение</string>
+    <string name="delete_closed_invoice_question">Удалить закрытую накладную?</string>
+    <string name="export_error">Ошибка экспорта</string>
 </resources>

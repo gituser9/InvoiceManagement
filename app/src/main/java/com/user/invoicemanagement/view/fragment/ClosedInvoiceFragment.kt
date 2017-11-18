@@ -3,21 +3,18 @@ package com.user.invoicemanagement.view.fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AutoCompleteTextView
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.dto.ClosedInvoice
 import com.user.invoicemanagement.model.dto.OldProduct
 import com.user.invoicemanagement.model.dto.OldProductFactory
+import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.presenter.ClosedInvoicePresenter
 import com.user.invoicemanagement.view.adapter.ClosedInvoiceSection
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_closed_invoice_list.*
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 
 class ClosedInvoiceFragment : BaseFragment() {
@@ -25,11 +22,12 @@ class ClosedInvoiceFragment : BaseFragment() {
     var invoiceId: Long = 0
     lateinit var adapter: SectionedRecyclerViewAdapter
     lateinit private var presenter: ClosedInvoicePresenter
-    private val baseFormat = NumberFormat.getCurrencyInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         presenter = ClosedInvoicePresenter(this)
         adapter = SectionedRecyclerViewAdapter()
@@ -48,11 +46,21 @@ class ClosedInvoiceFragment : BaseFragment() {
         return view
     }
 
-    fun show(invoice: ClosedInvoice) {
-        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
-        decimalFormatSymbols.currencySymbol = ""
-        (baseFormat as DecimalFormat).decimalFormatSymbols = decimalFormatSymbols
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_closed_invoice, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+        R.id.send_email -> {
+            presenter.exportToExcel(invoiceId, activity)
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun show(invoice: ClosedInvoice) {
         var purchaseSummary = 0f
         var sellingSummary = 0f
         val params = SectionParameters.Builder(R.layout.fragment_closed_invoice_item)
@@ -70,7 +78,7 @@ class ClosedInvoiceFragment : BaseFragment() {
             }
         }
 
-        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": ${baseFormat.format(sellingSummary)} - ${baseFormat.format(purchaseSummary)}"
+        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": ${Constant.baseFormat.format(sellingSummary)} - ${Constant.baseFormat.format(purchaseSummary)}"
         adapter.notifyDataSetChanged()
     }
 

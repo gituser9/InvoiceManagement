@@ -42,4 +42,5 @@
     <string name="delete_factory_question">Delete Factory?</string>
     <string name="confirm">Confirm</string>
     <string name="delete_closed_invoice_question">Delete Closed Invoice?</string>
+    <string name="export_error">Export Error</string>
 </resources>
