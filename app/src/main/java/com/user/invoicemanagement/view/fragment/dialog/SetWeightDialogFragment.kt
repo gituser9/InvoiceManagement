@@ -29,8 +29,8 @@ class SetWeightDialogFragment : DialogFragment() {
 
         view.findViewById<Button>(R.id.btnWeightMinus).setOnClickListener {
             dismiss()
-            val oldValue = button.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-            val value = edtNewWeight.text.toString().toFloatOrNull() ?: 0f
+            val oldValue = prepareString(button.text.toString()).toFloatOrNull() ?: 0f
+            val value = prepareString(edtNewWeight.text.toString()).toFloatOrNull() ?: 0f
 
             setProductWeight(product, oldValue - value)
             button.text = Constant.baseFormat.format(oldValue - value)
@@ -41,8 +41,8 @@ class SetWeightDialogFragment : DialogFragment() {
             button.text = "0.0"
         }
         view.findViewById<Button>(R.id.btnWeightPlus).setOnClickListener {
-            val oldValue = button.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-            val value = edtNewWeight.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
+            val oldValue = prepareString(button.text.toString()).toFloatOrNull() ?: 0f
+            val value = prepareString(edtNewWeight.text.toString()).toFloatOrNull() ?: 0f
 
             setProductWeight(product, oldValue + value)
             button.text = Constant.baseFormat.format(oldValue + value).replace(',', '.')
@@ -60,5 +60,11 @@ class SetWeightDialogFragment : DialogFragment() {
             WeightEnum.WEIGHT_4 -> { product.weight4 = weightValue }
             WeightEnum.WEIGHT_5 -> { product.weight5 = weightValue }
         }
+    }
+
+    private fun prepareString(string: String): String {
+        return string.trim()
+                .replace(',', '.')
+                .replace(Constant.whiteSpaceRegex, "")
     }
 }

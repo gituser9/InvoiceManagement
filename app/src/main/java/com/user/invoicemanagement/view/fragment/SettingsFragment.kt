@@ -1,16 +1,21 @@
 package com.user.invoicemanagement.view.fragment
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.presenter.SettingsPresenter
@@ -22,6 +27,7 @@ class SettingsFragment : BaseFragment() {
     private lateinit var presenter: SettingsPresenter
     private val uploadDbCode = 111
     private val getDbCode = 222
+    var ACCESS_EXTERNAL_STORAGE_STATE = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,16 +63,60 @@ class SettingsFragment : BaseFragment() {
         }
         when (requestCode) {
             uploadDbCode -> {
-                val selectedFile = data.dataString
+                val permission = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+                if (permission !== PackageManager.PERMISSION_GRANTED) {
+                    // We don't have permission so prompt the user
+                    ACCESS_EXTERNAL_STORAGE_STATE = 1
+                    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), ACCESS_EXTERNAL_STORAGE_STATE)
+                }
                 presenter.replaceDb(data.data.path, context)
             }
             getDbCode -> {
+                val permission = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+                if (permission !== PackageManager.PERMISSION_GRANTED) {
+                    // We don't have permission so prompt the user
+                    ACCESS_EXTERNAL_STORAGE_STATE = 1
+                    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), ACCESS_EXTERNAL_STORAGE_STATE)
+                }
                 presenter.moveDbFile(data.data.path, activity)
                 return
             }
             else -> return
         }
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            ACCESS_EXTERNAL_STORAGE_STATE -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Write to the storage (ex: call appendByteBuffer(byte[] data) here)
+                } else {
+                    Toast.makeText(context, "Please grant permission.", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        switch(requestCode) {
+            case ACCESS_EXTERNAL_STORAGE_STATE : {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Write to the storage (ex: call appendByteBuffer(byte[] data) here)
+
+                } else {
+                    Toast.makeText(context, "Please grant permission.", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+    }*/
 
 
     private fun save() {

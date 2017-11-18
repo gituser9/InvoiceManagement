@@ -14,6 +14,9 @@ import java.io.IOException
 class SettingsPresenter(val view: SettingsFragment) : BasePresenter() {
 
     fun moveDbFile(chosenPath: String, context: Context) {
+
+
+
         val db = FlowManager.getDatabase(DbflowDatabase.NAME).databaseFileName
         val path = "/${chosenPath.split(":").last()}/$db"
 

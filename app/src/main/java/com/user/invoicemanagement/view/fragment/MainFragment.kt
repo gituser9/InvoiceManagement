@@ -87,6 +87,7 @@ class MainFragment : BaseFragment(), MainView {
         }
         R.id.close_invoice -> {
             presenter.closeInvoice()
+            showToast(R.string.invoice_closed)
             true
         }
         R.id.excel_export -> {

@@ -104,28 +104,22 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
         for (item in holders) {
             if (item.product != null) {
-                val newProduct = Product()
-                newProduct.id = item.product!!.id
-                newProduct.factoryId = item.product!!.factoryId
-                newProduct.name = item.edtName.text.toString()
-
-
-                newProduct.weightOnStore = item.btnWeightOnStore.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-                newProduct.weightInFridge = item.btnWeightInFridge.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-                newProduct.weightInStorage = item.btnWeightInStorage.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-                newProduct.weight4 = item.btnWeight4.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-                newProduct.weight5 = item.btnWeight5.text.toString().replace(',', '.').toFloatOrNull() ?: 0f
-
-                newProduct.purchasePrice = item.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
-                newProduct.sellingPrice = item.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
-
-                item.product!!.name = item.edtName.text.toString()
-                item.product!!.purchasePrice = item.edtPurchasePrice.text.toString().toFloatOrNull() ?: 0f
-                item.product!!.sellingPrice = item.edtSellingPrice.text.toString().toFloatOrNull() ?: 0f
-
-                products.add(newProduct)
+                try {
+                    item.product!!.name = item.edtName.text.toString()
+                    item.product!!.weightOnStore = prepareString(item.btnWeightOnStore.text.toString()).toFloatOrNull() ?: 0f
+                    item.product!!.weightInFridge = prepareString(item.btnWeightInFridge.text.toString()).toFloatOrNull() ?: 0f
+                    item.product!!.weightInStorage = prepareString(item.btnWeightInStorage.text.toString()).toFloatOrNull() ?: 0f
+                    item.product!!.weight4 = prepareString(item.btnWeight4.text.toString()).toFloatOrNull() ?: 0f
+                    item.product!!.weight5 = prepareString(item.btnWeight5.text.toString()).toFloatOrNull() ?: 0f
+                    item.product!!.purchasePrice = prepareString(item.edtPurchasePrice.text.toString()).toFloatOrNull() ?: 0f
+                    item.product!!.sellingPrice = prepareString(item.edtSellingPrice.text.toString()).toFloatOrNull() ?: 0f
+                } catch (e: Exception) {
+                    continue
+                }
+                products.add(item.product!!)
             }
         }
+
 
         return products
     }
@@ -134,8 +128,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
     fun updateSummaryData() {
         for (item in holders) {
             if (item.product != null) {
-                item.tvPurchasePriceSummary.text = Constant.baseFormat.format(item.purchasePriceSummary())
-                item.tvSellingPriceSummary.text = Constant.baseFormat.format(item.sellingPriceSummary())
+                item.tvPurchasePriceSummary.text = Constant.baseFormat.format(item.product!!.purchasePriceSummary)
+                item.tvSellingPriceSummary.text = Constant.baseFormat.format(item.product!!.sellingPriceSummary)
                 setFooterData()
             }
         }
@@ -155,6 +149,12 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
 
         footerHolder?.mainFooterPurchaseSummary?.text = Constant.baseFormat.format(purchaseSummary)
         footerHolder?.mainFooterSellingSummary?.text = Constant.baseFormat.format(sellingSummary)
+    }
+
+    private fun prepareString(string: String): String {
+        return string
+                .replace(',', '.')
+                .replace(Constant.whiteSpaceRegex, "")
     }
 
 

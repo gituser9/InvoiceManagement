@@ -37,4 +37,5 @@
     <string name="main">Home</string>
     <string name="get_db">Get Database</string>
     <string name="upload_db">Upload Database</string>
+    <string name="invoice_closed">Invoice closed</string>
 </resources>

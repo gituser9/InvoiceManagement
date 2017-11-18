@@ -10,6 +10,7 @@ object Constant {
     const val settingsName = "userInfo"
 
     val baseFormat = NumberFormat.getCurrencyInstance()
+    val whiteSpaceRegex: Regex = "\\s".toRegex()
 
     init {
         val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols

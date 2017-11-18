@@ -10,5 +10,7 @@ interface BaseView {
 
     fun showToast(message: String)
 
+    fun showToast(stringId: Int)
+
     fun showAlert(stringId: Int)
 }

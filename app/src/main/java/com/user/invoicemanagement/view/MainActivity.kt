@@ -5,7 +5,10 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
+import android.view.View
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.view.fragment.ArchiveFragment
 import com.user.invoicemanagement.view.fragment.MainFragment
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         initToolBar()
         initNavigationView()
+        initFilter()
 
         fragmentManager = supportFragmentManager
         val fragment = fragmentManager.findFragmentByTag(TAG)
@@ -77,6 +81,26 @@ class MainActivity : AppCompatActivity() {
         toolbar.setTitle(R.string.app_name)
 
         setSupportActionBar(toolbar)
+    }
+
+    private fun initFilter() {
+        tvFilter.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
+                    if (tvFilter.text.isEmpty()) {
+                        btnClear.visibility = View.GONE
+                    } else {
+                        btnClear.visibility = View.VISIBLE
+                    }
+        })
+        btnClear.setOnClickListener {
+            tvFilter.setText("")
+        }
     }
 
     private fun replaceFragment(fragment: Fragment, addBackStack: Boolean) {

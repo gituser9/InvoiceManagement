@@ -169,10 +169,10 @@ class MainPresenter(var view: MainView) : BasePresenter() {
                         sheet.addCell(Label(3, currentRow, product.weightInStorage.toString()))
                         sheet.addCell(Label(4, currentRow, product.weight4.toString()))
                         sheet.addCell(Label(5, currentRow, product.weight5.toString()))
-                        sheet.addCell(Label(6, currentRow, product.sellingPrice.toString()))
-                        sheet.addCell(Label(7, currentRow, product.purchasePrice.toString()))
-                        sheet.addCell(Label(8, currentRow, product.sellingPriceSummary.toString()))
-                        sheet.addCell(Label(9, currentRow, product.purchasePriceSummary.toString()))
+                        sheet.addCell(Label(6, currentRow, Constant.baseFormat.format(product.sellingPrice)))
+                        sheet.addCell(Label(7, currentRow, Constant.baseFormat.format(product.purchasePrice)))
+                        sheet.addCell(Label(8, currentRow, Constant.baseFormat.format(product.sellingPriceSummary)))
+                        sheet.addCell(Label(9, currentRow, Constant.baseFormat.format(product.purchasePriceSummary)))
 
                         ++currentRow
                     }
