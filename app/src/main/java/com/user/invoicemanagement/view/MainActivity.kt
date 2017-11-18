@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initToolBar() {
-        toolbar.setTitle(R.string.app_name)
+//        toolbar.setTitle(R.string.app_name)
 
         setSupportActionBar(toolbar)
     }

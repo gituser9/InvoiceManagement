@@ -42,4 +42,9 @@
     <string name="confirm">Подтверждение</string>
     <string name="delete_closed_invoice_question">Удалить закрытую накладную?</string>
     <string name="export_error">Ошибка экспорта</string>
+    <string name="name">Название</string>
+    <string name="weight">Вес</string>
+    <string name="price">Цена</string>
+    <string name="sell_price">Продажная Цена</string>
+    <string name="purch_price">Закупочная Цена</string>
 </resources>

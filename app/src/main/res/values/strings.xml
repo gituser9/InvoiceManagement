@@ -43,4 +43,9 @@
     <string name="confirm">Confirm</string>
     <string name="delete_closed_invoice_question">Delete Closed Invoice?</string>
     <string name="export_error">Export Error</string>
+    <string name="name">Name</string>
+    <string name="weight">Weight</string>
+    <string name="price">Price</string>
+    <string name="sell_price">Sell. Price</string>
+    <string name="purch_price">Purch. Price</string>
 </resources>
