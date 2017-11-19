@@ -75,6 +75,7 @@ class MainFragment : BaseFragment(), MainView {
     override fun onPause() {
         super.onPause()
 
+        saveAll()
         activity.fab.visibility = View.GONE
     }
 
@@ -175,6 +176,7 @@ class MainFragment : BaseFragment(), MainView {
         dialog.button = button
         dialog.product = product
         dialog.weightEnum = weightEnum
+        dialog.fragment = this
 
         dialog.show(activity.supportFragmentManager, "set weight")
     }
@@ -198,7 +200,7 @@ class MainFragment : BaseFragment(), MainView {
     }
 
     override fun saveAll(showMessage: Boolean) {
-        hideKeyboard()
+//        hideKeyboard()
         val list = mutableListOf<Product>()
 
         for ((_, section) in adapter.sectionsMap) {

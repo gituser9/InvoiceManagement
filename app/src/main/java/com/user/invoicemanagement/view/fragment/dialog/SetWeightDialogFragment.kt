@@ -10,6 +10,7 @@ import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.data.WeightEnum
 import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.other.Constant
+import com.user.invoicemanagement.view.fragment.MainView
 
 
 class SetWeightDialogFragment : DialogFragment() {
@@ -18,6 +19,7 @@ class SetWeightDialogFragment : DialogFragment() {
     lateinit var button: Button
     lateinit var product: Product
     lateinit var weightEnum: WeightEnum
+    var fragment: MainView? = null
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -34,11 +36,13 @@ class SetWeightDialogFragment : DialogFragment() {
 
             setProductWeight(product, oldValue - value)
             button.text = Constant.baseFormat.format(oldValue - value)
+            fragment?.saveAll()
         }
         view.findViewById<Button>(R.id.btnWeightReset).setOnClickListener {
             dismiss()
             setProductWeight(product, 0f)
             button.text = "0.0"
+            fragment?.saveAll()
         }
         view.findViewById<Button>(R.id.btnWeightPlus).setOnClickListener {
             val oldValue = prepareString(button.text.toString()).toFloatOrNull() ?: 0f
@@ -46,6 +50,7 @@ class SetWeightDialogFragment : DialogFragment() {
 
             setProductWeight(product, oldValue + value)
             button.text = Constant.baseFormat.format(oldValue + value).replace(',', '.')
+            fragment?.saveAll()
             dismiss()
         }
 
