@@ -47,4 +47,8 @@
     <string name="price">Цена</string>
     <string name="sell_price">Продажная Цена</string>
     <string name="purch_price">Закупочная Цена</string>
+    <string name="delete_factory">Удалить завод</string>
+    <string name="input_new_factory_name">New Factory Name</string>
+    <string name="all_list">Общий список</string>
+    <string name="update_factory">Изменить имя завода</string>
 </resources>

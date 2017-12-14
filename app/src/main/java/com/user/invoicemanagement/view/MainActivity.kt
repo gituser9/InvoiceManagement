@@ -2,7 +2,6 @@ package com.user.invoicemanagement.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -12,6 +11,7 @@ import android.view.View
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.view.fragment.ArchiveFragment
 import com.user.invoicemanagement.view.fragment.MainFragment
+import com.user.invoicemanagement.view.fragment.MainTabLayoutFragment
 import com.user.invoicemanagement.view.fragment.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "TAG"
     private var toggle: ActionBarDrawerToggle? = null
-    private lateinit var fragmentManager: FragmentManager
+    private var fragmentManager = supportFragmentManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +31,10 @@ class MainActivity : AppCompatActivity() {
         initNavigationView()
         initFilter()
 
-        fragmentManager = supportFragmentManager
         val fragment = fragmentManager.findFragmentByTag(TAG)
 
         if (fragment == null) {
-            replaceFragment(MainFragment(), false)
+            replaceFragment(MainTabLayoutFragment(), false)
         }
     }
 
@@ -69,6 +68,9 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(SettingsFragment(), true)
                 }
                 R.id.action_home -> {
+                    replaceFragment(MainTabLayoutFragment(), true)
+                }
+                R.id.action_all_list -> {
                     replaceFragment(MainFragment(), true)
                 }
                 else -> {}

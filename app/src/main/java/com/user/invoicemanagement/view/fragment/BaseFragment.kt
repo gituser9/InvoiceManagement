@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.user.invoicemanagement.R
+import com.user.invoicemanagement.view.interfaces.BaseView
 
 
 abstract class BaseFragment : Fragment(), BaseView {

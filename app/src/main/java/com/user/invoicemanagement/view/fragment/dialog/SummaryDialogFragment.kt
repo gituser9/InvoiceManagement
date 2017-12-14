@@ -23,9 +23,11 @@ class SummaryDialogFragment : DialogFragment() {
         val inflater = activity.layoutInflater
         val view = inflater.inflate(R.layout.dialog_summary, null)
 
+        val x = Constant.priceFormat.format(summary?.sellingSummary)
+
         if (summary != null) {
-            view.purchaseSummary.text = Constant.baseFormat.format(summary?.purchaseSummary)
-            view.sellingSummary.text = Constant.baseFormat.format(summary?.sellingSummary)
+            view.purchaseSummary.text = Constant.priceFormat.format(summary?.purchaseSummary)
+            view.sellingSummary.text = Constant.priceFormat.format(summary?.sellingSummary)
         }
 
         builder.setView(view)

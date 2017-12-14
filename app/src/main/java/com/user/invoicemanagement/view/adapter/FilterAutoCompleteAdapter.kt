@@ -11,12 +11,12 @@ import android.widget.TextView
 import com.user.invoicemanagement.R
 import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.Product
-import com.user.invoicemanagement.view.fragment.BaseView
+import com.user.invoicemanagement.view.interfaces.BaseView
 
 
 class FilterAutoCompleteAdapter(private val context: Context, private val view: BaseView) : BaseAdapter(), Filterable {
 
-    val model = ModelImpl()
+    val model = ModelImpl.instance
     var searchResults: List<Product> = emptyList()
 
 

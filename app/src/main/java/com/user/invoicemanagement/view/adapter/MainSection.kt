@@ -9,7 +9,7 @@ import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.view.adapter.holder.MainFooterViewHolder
 import com.user.invoicemanagement.view.adapter.holder.MainHeaderViewHolder
 import com.user.invoicemanagement.view.adapter.holder.MainViewHolder
-import com.user.invoicemanagement.view.fragment.MainView
+import com.user.invoicemanagement.view.interfaces.MainView
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 
@@ -56,8 +56,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
             itemHolder.edtSellingPrice.setText(product.sellingPrice.toString())
         }
 
-        itemHolder.tvPurchasePriceSummary.text = Constant.baseFormat.format(product.purchasePriceSummary)
-        itemHolder.tvSellingPriceSummary.text = Constant.baseFormat.format(product.sellingPriceSummary)
+        itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
+        itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
 
         itemHolder.btnWeightOnStore.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightOnStore, product, WeightEnum.WEIGHT_1) }
         itemHolder.btnWeightInFridge.setOnClickListener { mainView.showSetWeightDialog(itemHolder.btnWeightInFridge, product, WeightEnum.WEIGHT_2) }
@@ -128,8 +128,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
     fun updateSummaryData() {
         for (item in holders) {
             if (item.product != null) {
-                item.tvPurchasePriceSummary.text = Constant.baseFormat.format(item.product!!.purchasePriceSummary)
-                item.tvSellingPriceSummary.text = Constant.baseFormat.format(item.product!!.sellingPriceSummary)
+                item.tvPurchasePriceSummary.text = Constant.priceFormat.format(item.product!!.purchasePriceSummary)
+                item.tvSellingPriceSummary.text = Constant.priceFormat.format(item.product!!.sellingPriceSummary)
                 setFooterData()
             }
         }
@@ -147,8 +147,8 @@ class MainSection(sectionParameters: SectionParameters, private val factory: Pro
             sellingSummary += product.sellingPriceSummary
         }
 
-        footerHolder?.mainFooterPurchaseSummary?.text = Constant.baseFormat.format(purchaseSummary)
-        footerHolder?.mainFooterSellingSummary?.text = Constant.baseFormat.format(sellingSummary)
+        footerHolder?.mainFooterPurchaseSummary?.text = Constant.priceFormat.format(purchaseSummary)
+        footerHolder?.mainFooterSellingSummary?.text = Constant.priceFormat.format(sellingSummary)
     }
 
     private fun prepareString(string: String): String {

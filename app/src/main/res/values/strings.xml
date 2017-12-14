@@ -48,4 +48,9 @@
     <string name="price">Price</string>
     <string name="sell_price">Sell. Price</string>
     <string name="purch_price">Purch. Price</string>
+
+    <string name="delete_factory">Delete Factory</string>
+    <string name="input_new_factory_name">New Factory Name</string>
+    <string name="all_list">All</string>
+    <string name="update_factory">Update Factory Name</string>
 </resources>

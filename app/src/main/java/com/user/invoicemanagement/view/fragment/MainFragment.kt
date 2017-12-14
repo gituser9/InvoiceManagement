@@ -20,6 +20,7 @@ import com.user.invoicemanagement.view.adapter.MainSection
 import com.user.invoicemanagement.view.fragment.dialog.EditFactoryDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SetWeightDialogFragment
 import com.user.invoicemanagement.view.fragment.dialog.SummaryDialogFragment
+import com.user.invoicemanagement.view.interfaces.MainView
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -99,10 +100,10 @@ class MainFragment : BaseFragment(), MainView {
 
             true
         }
-        R.id.excel_export -> {
+        /*R.id.excel_export -> {
             presenter.exportToExcel(context)
             true
-        }
+        }*/
         else -> {
             super.onOptionsItemSelected(item)
         }
@@ -200,7 +201,6 @@ class MainFragment : BaseFragment(), MainView {
     }
 
     override fun saveAll(showMessage: Boolean) {
-//        hideKeyboard()
         val list = mutableListOf<Product>()
 
         for ((_, section) in adapter.sectionsMap) {

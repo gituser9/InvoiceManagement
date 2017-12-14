@@ -6,7 +6,11 @@ import com.user.invoicemanagement.model.dto.*
 import io.reactivex.Observable
 
 
-class ModelImpl : Model {
+class ModelImpl private constructor(): Model {
+
+    companion object {
+        val instance: ModelImpl by lazy { ModelImpl() }
+    }
 
     override fun getAll(): Observable<List<ProductFactory>> {
         val results = (select from ProductFactory::class).list
@@ -14,19 +18,18 @@ class ModelImpl : Model {
         return Observable.fromArray(results)
     }
 
-    override fun addNewFactory(name: String) {
+    override fun addNewFactory(name: String): ProductFactory {
         val newFactory = ProductFactory()
         newFactory.name = name
-
         newFactory.insert()
+
+        return newFactory
     }
 
     override fun addNewProduct(factoryId: Long): Observable<Product>? {
         return try {
             val product = Product()
             product.factoryId = factoryId
-
-//            product.insert()
             product.save()
 
             Observable.just(product)
@@ -169,6 +172,12 @@ class ModelImpl : Model {
         }
     }
 
+    override fun getFactory(id: Long): Observable<ProductFactory> {
+        val result = (select from ProductFactory::class where (ProductFactory_Table.id.eq(id))).result
+
+        return Observable.just(result)
+    }
+
 
 
 
@@ -181,7 +190,7 @@ class ModelImpl : Model {
 
     private fun createOldProducts(products: List<Product>, factoryId: Long): List<OldProduct> {
         val oldProducts = mutableListOf<OldProduct>()
-
+        // todo: product to data class
         for (product in products) {
             val oldProduct = OldProduct()
             oldProduct.factoryId = factoryId
@@ -202,7 +211,7 @@ class ModelImpl : Model {
     }
 
     private fun cleanProducts(products: List<Product>) {
-        products.forEach { product: Product? ->
+        /*products.forEach { product: Product? ->
             if (product != null) {
                 product.weightOnStore = 0f
                 product.weightInFridge = 0f
@@ -210,8 +219,17 @@ class ModelImpl : Model {
                 product.weight4 = 0f
                 product.weight5 = 0f
 
-                product.update()
+                product.save()
             }
+        }*/
+        for (product in products) {
+            product.weightOnStore = 0f
+            product.weightInFridge = 0f
+            product.weightInStorage = 0f
+            product.weight4 = 0f
+            product.weight5 = 0f
+
+            product.save()
         }
     }
 }

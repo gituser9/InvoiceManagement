@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import com.user.invoicemanagement.R
-import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.ClosedInvoice
 import com.user.invoicemanagement.other.Constant
 import com.user.invoicemanagement.view.fragment.ClosedInvoiceFragment
@@ -24,10 +23,6 @@ import java.util.*
 
 
 class ClosedInvoicePresenter(val view: ClosedInvoiceFragment) : BasePresenter() {
-
-    init {
-        model = ModelImpl()
-    }
 
     fun getInvoice(invoiceId: Long) {
         model.getInvoice(invoiceId)
@@ -57,6 +52,7 @@ class ClosedInvoicePresenter(val view: ClosedInvoiceFragment) : BasePresenter() 
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { invoice: ClosedInvoice ->
                     createExcel(invoice)
+                    sendEmail(context)
                 }
     }
 
@@ -106,10 +102,10 @@ class ClosedInvoicePresenter(val view: ClosedInvoiceFragment) : BasePresenter() 
                         sheet.addCell(Label(3, currentRow, product.weightInStorage.toString()))
                         sheet.addCell(Label(4, currentRow, product.weight4.toString()))
                         sheet.addCell(Label(5, currentRow, product.weight5.toString()))
-                        sheet.addCell(Label(6, currentRow, Constant.baseFormat.format(product.sellingPrice)))
-                        sheet.addCell(Label(7, currentRow, Constant.baseFormat.format(product.purchasePrice)))
-                        sheet.addCell(Label(8, currentRow, Constant.baseFormat.format(product.sellingPriceSummary)))
-                        sheet.addCell(Label(9, currentRow, Constant.baseFormat.format(product.purchasePriceSummary)))
+                        sheet.addCell(Label(6, currentRow, Constant.priceFormat.format(product.sellingPrice)))
+                        sheet.addCell(Label(7, currentRow, Constant.priceFormat.format(product.purchasePrice)))
+                        sheet.addCell(Label(8, currentRow, Constant.priceFormat.format(product.sellingPriceSummary)))
+                        sheet.addCell(Label(9, currentRow, Constant.priceFormat.format(product.purchasePriceSummary)))
 
                         ++currentRow
                     }

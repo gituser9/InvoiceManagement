@@ -7,6 +7,14 @@
         android:title="@string/add_manufacturer"
         android:icon="@drawable/ic_add" />
     <item
+        android:id="@+id/delete_factory"
+        android:title="@string/delete_factory"
+        android:icon="@drawable/ic_receipt"/>
+    <item
+        android:id="@+id/update_factory"
+        android:title="@string/update_factory"
+        android:icon="@drawable/ic_receipt"/>
+    <item
         android:id="@+id/close_invoice"
         android:title="@string/close_invoice"
         android:icon="@drawable/ic_add" />
@@ -15,9 +23,6 @@
         android:title="@string/summary"
         android:icon="@drawable/ic_receipt"
         app:showAsAction="always"/>
-    <!--<item
-        android:id="@+id/excel_export"
-        android:title="@string/export_to_excel"
-        android:icon="@drawable/ic_add" />-->
+
 
 </menu>

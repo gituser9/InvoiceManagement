@@ -9,12 +9,12 @@ object Constant {
     const val emailForReportsKey = "emailForReports"
     const val settingsName = "userInfo"
 
-    val baseFormat = NumberFormat.getCurrencyInstance()
+    val priceFormat = NumberFormat.getCurrencyInstance()
     val whiteSpaceRegex: Regex = "\\s".toRegex()
 
     init {
-        val decimalFormatSymbols = (baseFormat as DecimalFormat).decimalFormatSymbols
+        val decimalFormatSymbols = (priceFormat as DecimalFormat).decimalFormatSymbols
         decimalFormatSymbols.currencySymbol = ""
-        baseFormat.decimalFormatSymbols = decimalFormatSymbols
+        priceFormat.decimalFormatSymbols = decimalFormatSymbols
     }
 }

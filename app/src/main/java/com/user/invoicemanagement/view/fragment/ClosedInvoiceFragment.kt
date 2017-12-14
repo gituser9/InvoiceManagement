@@ -78,7 +78,7 @@ class ClosedInvoiceFragment : BaseFragment() {
             }
         }
 
-        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": ${Constant.baseFormat.format(sellingSummary)} - ${Constant.baseFormat.format(purchaseSummary)}"
+        tvInvoiceSummary.text = activity.getString(R.string.total_summary) + ": ${Constant.priceFormat.format(sellingSummary)} - ${Constant.priceFormat.format(purchaseSummary)}"
         adapter.notifyDataSetChanged()
     }
 

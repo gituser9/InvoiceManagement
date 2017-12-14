@@ -11,7 +11,7 @@ interface Model {
 
     fun getAll() : Observable<List<ProductFactory>>
 
-    fun addNewFactory(name: String)
+    fun addNewFactory(name: String): ProductFactory
 
     fun addNewProduct(factoryId: Long): Observable<Product>?
 
@@ -39,4 +39,5 @@ interface Model {
 
     fun saveAll(products: List<Product>)
 
+    fun getFactory(id: Long): Observable<ProductFactory>
 }

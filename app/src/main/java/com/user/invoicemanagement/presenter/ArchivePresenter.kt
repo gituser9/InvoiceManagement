@@ -2,7 +2,6 @@ package com.user.invoicemanagement.presenter
 
 import android.content.DialogInterface
 import com.user.invoicemanagement.R
-import com.user.invoicemanagement.model.ModelImpl
 import com.user.invoicemanagement.model.dto.ClosedInvoice
 import com.user.invoicemanagement.view.fragment.ArchiveFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,10 +9,6 @@ import io.reactivex.schedulers.Schedulers
 
 
 class ArchivePresenter(private val view: ArchiveFragment) : BasePresenter() {
-
-    init {
-        model = ModelImpl()
-    }
 
     fun getAll() {
         model.getAllClosedInvoices()

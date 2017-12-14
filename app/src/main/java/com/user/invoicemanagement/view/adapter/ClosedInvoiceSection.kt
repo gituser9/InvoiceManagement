@@ -31,8 +31,8 @@ class ClosedInvoiceSection(sectionParameters: SectionParameters, private val fac
         itemHolder.edtPurchasePrice.text = product.purchasePrice.toString()
         itemHolder.edtSellingPrice.text = product.sellingPrice.toString()
 
-        itemHolder.tvPurchasePriceSummary.text = Constant.baseFormat.format(product.purchasePriceSummary)
-        itemHolder.tvSellingPriceSummary.text = Constant.baseFormat.format(product.sellingPriceSummary)
+        itemHolder.tvPurchasePriceSummary.text = Constant.priceFormat.format(product.purchasePriceSummary)
+        itemHolder.tvSellingPriceSummary.text = Constant.priceFormat.format(product.sellingPriceSummary)
     }
 
     override fun getHeaderViewHolder(view: View): RecyclerView.ViewHolder = ClosedInvoiceHeaderViewHolder(view)
@@ -54,7 +54,7 @@ class ClosedInvoiceSection(sectionParameters: SectionParameters, private val fac
             sellingSummary += product.sellingPriceSummary
         }
 
-        itemHolder.mainFooterPurchaseSummary.text = Constant.baseFormat.format(purchaseSummary)
-        itemHolder.mainFooterSellingSummary.text = Constant.baseFormat.format(sellingSummary)
+        itemHolder.mainFooterPurchaseSummary.text = Constant.priceFormat.format(purchaseSummary)
+        itemHolder.mainFooterSellingSummary.text = Constant.priceFormat.format(sellingSummary)
     }
 }

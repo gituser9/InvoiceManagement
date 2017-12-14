@@ -1,4 +1,4 @@
-package com.user.invoicemanagement.view.fragment
+package com.user.invoicemanagement.view.interfaces
 
 import android.widget.Button
 import com.user.invoicemanagement.model.data.Summary
@@ -7,7 +7,7 @@ import com.user.invoicemanagement.model.dto.Product
 import com.user.invoicemanagement.model.dto.ProductFactory
 
 
-interface MainView : BaseView {
+interface MainView : BaseView, Saver {
 
     fun showAll(list: List<ProductFactory>)
 
@@ -28,7 +28,5 @@ interface MainView : BaseView {
     fun showWait()
 
     fun hideWait()
-
-    fun saveAll(showMessage: Boolean = false)
 
 }

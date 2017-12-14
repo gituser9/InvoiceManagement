@@ -1,4 +1,4 @@
-package com.user.invoicemanagement.view.fragment
+package com.user.invoicemanagement.view.interfaces
 
 import android.content.DialogInterface
 

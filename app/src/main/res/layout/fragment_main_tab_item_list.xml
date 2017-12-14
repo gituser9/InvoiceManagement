@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="16dp"
+            android:id="@+id/mainTabSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="@string/name"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/weight"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sell_price"/>
+
+                    <TextView
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/purch_price"
+                        />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/mainTabRecyclerView"
+                    android:name="com.user.invoicemanagement.view.fragment.MainTabFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:context="com.user.invoicemanagement.view.fragment.MainTabFragment" />
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/btnAddNew"
+            android:text="@string/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
+
+
